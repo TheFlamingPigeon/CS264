@@ -1,0 +1,1195 @@
+listing 1
+// Overload the constructor. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class Sample { 
+public: 
+  int x; 
+  int y; 
+ 
+  // Overload the default constructor. 
+  Sample() { x = y = 0; } 
+ 
+  // Constructor with one parameter. 
+  Sample(int i) { x = y = i; } 
+ 
+  // Constructor with two parameters. 
+  Sample(int i, int j) { x = i; y = j; } 
+};   
+ 
+int main() {   
+  Sample t;         // invoke default constructor 
+  Sample t1(5);     // use Sample(int) 
+  Sample t2(9, 10); // use Sample(int, int) 
+ 
+  cout << "t.x: " << t.x << ", t.y: " << t.y << "\n"; 
+  cout << "t1.x: " << t1.x << ", t1.y: " << t1.y << "\n"; 
+  cout << "t2.x: " << t2.x << ", t2.y: " << t2.y << "\n"; 
+ 
+  return 0; 
+}
+
+listing 2
+// Demonstrate object assignment. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class Test { 
+  int a, b; 
+public: 
+  void setab(int i, int j) { a = i, b = j; } 
+  void showab() { 
+    cout << "a is " << a << '\n'; 
+    cout << "b is " << b << '\n'; 
+  } 
+}; 
+ 
+int main() 
+{ 
+  Test ob1, ob2; 
+ 
+  ob1.setab(10, 20); 
+  ob2.setab(0, 0); 
+  cout << "ob1 before assignment: \n"; 
+  ob1.showab(); 
+  cout << "ob2 before assignment: \n"; 
+  ob2.showab(); 
+  cout << '\n'; 
+ 
+  ob2 = ob1; // assign ob1 to ob2 
+ 
+  cout << "ob1 after assignment: \n"; 
+  ob1.showab(); 
+  cout << "ob2 after assignment: \n"; 
+  ob2.showab(); 
+  cout << '\n'; 
+ 
+  ob1.setab(-1, -1); // change ob1 
+ 
+  cout << "ob1 after changing ob1: \n"; 
+  ob1.showab(); 
+  cout << "ob2 after changing ob1: \n"; 
+  ob2.showab(); 
+ 
+  return 0; 
+}
+
+listing 3
+// Pass an object to a function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int val; 
+public: 
+  MyClass(int i) { 
+    val = i; 
+  } 
+ 
+  int getval() { return val; } 
+  void setval(int i) { val = i; } 
+}; 
+ 
+void display(MyClass ob) 
+{ 
+  cout << ob.getval() << '\n'; 
+} 
+ 
+void change(MyClass ob) 
+{ 
+  ob.setval(100); // no effect on argument 
+ 
+  cout << "Value of ob inside change(): "; 
+  display(ob); 
+} 
+ 
+int main() 
+{ 
+  MyClass a(10); 
+ 
+  cout << "Value of a before calling change(): "; 
+  display(a); 
+ 
+  change(a); 
+  cout << "Value of a after calling change(): "; 
+  display(a); 
+ 
+  return 0; 
+}
+
+listing 4
+// Constructors, destructors, and passing objects. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int val; 
+public: 
+  MyClass(int i) { 
+    val = i; 
+    cout << "Inside constructor\n"; 
+  } 
+ 
+  ~MyClass() { cout << "Destructing\n"; } 
+  int getval() { return val; } 
+}; 
+ 
+void display(MyClass ob) 
+{ 
+  cout << ob.getval() << '\n'; 
+} 
+ 
+int main() 
+{ 
+  MyClass a(10); 
+ 
+  cout << "Before calling display().\n"; 
+  display(a); 
+  cout << "After display() returns.\n"; 
+ 
+  return 0; 
+}
+
+
+listing 5
+// Constructors, destructors, and passing objects. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int val; 
+public: 
+  MyClass(int i) { 
+    val = i; 
+    cout << "Inside constructor\n"; 
+  } 
+ 
+  ~MyClass() { cout << "Destructing\n"; } 
+  int getval() { return val; } 
+  void setval(int i) { val = i; } 
+}; 
+ 
+void display(MyClass &ob) 
+{ 
+  cout << ob.getval() << '\n'; 
+} 
+ 
+void change(MyClass &ob) 
+{ 
+  ob.setval(100); 
+} 
+ 
+int main() 
+{ 
+  MyClass a(10); 
+ 
+  cout << "Before calling display().\n"; 
+  display(a); 
+  cout << "After display() returns.\n"; 
+ 
+  change(a); 
+  cout << "After calling change().\n"; 
+  display(a); 
+ 
+  return 0; 
+}
+
+listing 6
+// Returning objects. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int val; 
+public: 
+  // Normal constructor. 
+  MyClass(int i) { 
+    val = i; 
+    cout << "Inside constructor\n"; 
+  } 
+ 
+  ~MyClass() { 
+     cout << "Destructing\n"; 
+  } 
+ 
+  int getval() { return val; } 
+ 
+  // Return an object. 
+  MyClass mkBigger() { 
+    MyClass o(val * 2); 
+ 
+    return o; 
+  } 
+}; 
+ 
+void display(MyClass ob) 
+{ 
+  cout << ob.getval() << '\n'; 
+} 
+ 
+int main() 
+{ 
+  cout << "Before constructing a.\n"; 
+  MyClass a(10); 
+  cout << "After constructing a.\n\n"; 
+ 
+  cout << "Before call to display().\n"; 
+  display(a); 
+  cout << "After display() returns.\n\n"; 
+ 
+  cout << "Before call to mkBigger().\n"; 
+  a = a.mkBigger(); 
+  cout << "After mkBigger() returns.\n\n"; 
+ 
+  cout << "Before second call to display().\n"; 
+  display(a); 
+  cout << "After display() returns.\n\n"; 
+ 
+  return 0; 
+} 
+
+
+listing 7
+/* Copy constructor invoked when passing an object 
+   to a function. */ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int val; 
+  int copynumber; 
+public: 
+  // Normal constructor. 
+  MyClass(int i) { 
+    val = i; 
+    copynumber = 0; 
+    cout << "Inside normal constructor\n"; 
+  } 
+ 
+  // Copy constructor 
+  MyClass(const MyClass &o) { 
+    val = o.val; 
+    copynumber = o.copynumber + 1; 
+    cout << "Inside copy constructor.\n"; 
+  } 
+ 
+  ~MyClass() { 
+     if(copynumber == 0) 
+       cout << "Destructing original.\n"; 
+     else 
+       cout << "Destructing copy " << 
+                copynumber << "\n"; 
+  } 
+ 
+  int getval() { return val; } 
+}; 
+ 
+void display(MyClass ob) 
+{ 
+  cout << ob.getval() << '\n'; 
+} 
+ 
+int main() 
+{ 
+  MyClass a(10); 
+ 
+  display(a); 
+ 
+  return 0; 
+}
+
+listing 8
+// Demonstrate a friend function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int a, b; 
+public: 
+  MyClass(int i, int j) { a=i; b=j; } 
+  friend int comDenom(MyClass x); // a friend function 
+}; 
+ 
+// Notice that comDenom() is a not a member function of any class. 
+int comDenom(MyClass x) 
+{ 
+  /* Because comDenom() is a friend of MyClass, it can 
+     directly access a and b. */ 
+  int max = x.a < x.b ? x.a : x.b; 
+ 
+  for(int i=2; i <= max; i++) 
+    if((x.a%i)==0 && (x.b%i)==0) return i; 
+ 
+  return 0; 
+} 
+ 
+int main() 
+{ 
+  MyClass n(18, 111); 
+ 
+  if(comDenom(n)) 
+    cout << "Common denominator is " << 
+             comDenom(n) << "\n"; 
+  else 
+    cout << "No common denominator.\n"; 
+ 
+  return 0; 
+}
+
+listing 9
+// Friend functions can be shared by two or more classes. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class Cylinder; // a forward declaration 
+ 
+enum colors { red, green, yellow }; 
+ 
+class Cube { 
+ colors color; 
+public: 
+  Cube(colors c) { color = c; } 
+  friend bool sameColor(Cube x, Cylinder y); 
+  // ... 
+}; 
+ 
+class Cylinder { 
+ colors color; 
+public: 
+  Cylinder(colors c) { color= c; } 
+  friend bool sameColor(Cube x, Cylinder y); 
+  // ... 
+}; 
+ 
+bool sameColor(Cube x, Cylinder y) 
+{ 
+  if(x.color == y.color) return true; 
+  else return false; 
+} 
+ 
+int main() 
+{ 
+  Cube cube1(red); 
+  Cube cube2(green); 
+  Cylinder cyl(green); 
+ 
+ 
+  if(sameColor(cube1, cyl)) 
+    cout << "cube1 and cyl are the same color.\n"; 
+  else 
+    cout << "cube1 and cyl are different colors.\n"; 
+ 
+  if(sameColor(cube2, cyl)) 
+    cout << "cube2 and cyl are the same color.\n"; 
+  else 
+    cout << "cube2 and cyl are different colors.\n"; 
+ 
+  return 0; 
+} 
+
+
+listing 10
+/* A function can be a member of one class and 
+   a friend of another. */ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class Cylinder; // a forward declaration 
+ 
+enum colors { red, green, yellow }; 
+ 
+class Cube { 
+ colors color; 
+public: 
+  Cube(colors c) { color= c; } 
+  bool sameColor(Cylinder y); 
+  // ... 
+}; 
+ 
+class Cylinder { 
+ colors color; 
+public: 
+  Cylinder(colors c) { color = c; } 
+  friend bool Cube::sameColor(Cylinder y); 
+  // ... 
+}; 
+ 
+bool Cube::sameColor(Cylinder y) { 
+  if(color == y.color) return true; 
+  else return false; 
+} 
+ 
+int main() 
+{ 
+  Cube cube1(red); 
+  Cube cube2(green); 
+  Cylinder cyl(green); 
+ 
+  if(cube1.sameColor(cyl)) 
+    cout << "cube1 and cyl are the same color.\n"; 
+  else 
+    cout << "cube1 and cyl are different colors.\n"; 
+ 
+  if(cube2.sameColor(cyl)) 
+    cout << "cube2 and cyl are the same color.\n"; 
+  else 
+    cout << "cube2 and cyl are different colors.\n"; 
+ 
+  return 0; 
+} 
+
+
+
+listing 11
+#include <iostream> 
+using namespace std; 
+ 
+struct Test { 
+  int get_i() { return i; } // these are public 
+  void put_i(int j) { i = j; } // by default 
+private: 
+  int i;    
+}; 
+ 
+int main() 
+{ 
+  Test s; 
+ 
+  s.put_i(10); 
+  cout << s.get_i(); 
+ 
+  return 0; 
+}
+
+listing 12
+#include <iostream> 
+using namespace std; 
+ 
+class Test { 
+  int i; // private by default 
+public: 
+  int get_i() { return i; } 
+  void put_i(int j) { i = j; } 
+}; 
+ 
+int main() 
+{ 
+  Test s; 
+ 
+  s.put_i(10); 
+  cout << s.get_i(); 
+ 
+  return 0; 
+}
+
+listing 13
+// Demonstrate a union. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+union u_type { 
+  u_type(short int a) { i = a; };  
+  u_type(char x, char y) { ch[0] = x; ch[1] = y; } 
+ 
+  void showchars(){ 
+    cout << ch[0] << " "; 
+    cout << ch[1] << "\n"; 
+  } 
+ 
+  short int i; 
+  char ch[2]; 
+}; 
+ 
+int main() 
+{ 
+  u_type u(1000); 
+  u_type u2('X', 'Y'); 
+ 
+  cout << "u as integer: "; 
+  cout << u.i << "\n"; 
+  cout << "u as chars: "; 
+  u.showchars(); 
+ 
+  cout << "u2 as integer: "; 
+  cout << u2.i << "\n"; 
+  cout << "u2 as chars: "; 
+  u2.showchars(); 
+ 
+  return 0; 
+}
+
+listing 14
+// Demonstrate an anonymous union. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+int main() 
+{ 
+  // define anonymous union 
+  union { 
+    long l; 
+    double d; 
+    char s[4]; 
+  } ; 
+ 
+  // now, reference union elements directly 
+  l = 100000; 
+  cout << l << " "; 
+  d = 123.2342; 
+  cout << d << " "; 
+  strcpy(s, "hi"); 
+  cout << s; 
+ 
+  return 0; 
+}
+
+listing 15
+// Use the "this" pointer. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class Test { 
+  int i; 
+public: 
+  void load_i(int val) { 
+    this->i = val; 
+  }  
+  int get_i() { 
+    return this->i; 
+  }  
+} ; 
+ 
+int main() 
+{ 
+  Test o; 
+ 
+  o.load_i(100); 
+  cout << o.get_i(); 
+ 
+  return 0; 
+}
+
+listing 16
+// Define + and = for the ThreeD class. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class ThreeD { 
+  int x, y, z; // 3-D coordinates 
+public: 
+  ThreeD() { x = y = z = 0; } 
+  ThreeD(int i, int j, int k) { x = i; y = j; z = k; } 
+ 
+  ThreeD operator+(ThreeD op2); // op1 is implied 
+  ThreeD operator=(ThreeD op2); // op1 is implied 
+ 
+  void show() ; 
+}; 
+ 
+// Overload +. 
+ThreeD ThreeD::operator+(ThreeD op2) 
+{ 
+  ThreeD temp; 
+ 
+  temp.x = x + op2.x; // These are integer additions 
+  temp.y = y + op2.x; // and the + retains is original 
+  temp.z = z + op2.z; // meaning relative to them. 
+  return temp; 
+} 
+ 
+// Overload assignment. 
+ThreeD ThreeD::operator=(ThreeD op2) 
+{ 
+  x = op2.x; // These are integer assignments 
+  y = op2.y; // and the = retains its original 
+  z = op2.z; // meaning relative to them. 
+  return *this; 
+} 
+ 
+// Show X, Y, Z coordinates. 
+void ThreeD::show() 
+{ 
+  cout << x << ", "; 
+  cout << y << ", "; 
+  cout << z << "\n"; 
+} 
+ 
+int main() 
+{ 
+  ThreeD a(1, 2, 3), b(10, 10, 10), c; 
+ 
+  cout << "Original value of a: "; 
+  a.show(); 
+  cout << "Original value of b: "; 
+  b.show(); 
+ 
+  cout << "\n"; 
+ 
+  c = a + b; // add a and b together 
+  cout << "Value of c after c = a + b: "; 
+  c.show(); 
+ 
+  cout << "\n"; 
+ 
+  c = a + b + c; // add a, b and c together 
+  cout << "Value of c after c = a + b + c: "; 
+  c.show(); 
+ 
+  cout << "\n"; 
+ 
+  c = b = a;  // demonstrate multiple assignment 
+  cout << "Value of c after c = b = a: "; 
+  c.show(); 
+  cout << "Value of b after c = b = a: "; 
+  b.show(); 
+ 
+  return 0; 
+}
+
+listing 17
+// Overload subtraction. 
+ThreeD ThreeD::operator-(ThreeD op2) 
+{ 
+  ThreeD temp; 
+ 
+  temp.x = x - op2.x; 
+  temp.y = y - op2.y; 
+  temp.z = z - op2.z; 
+  return temp; 
+}
+
+listing 18
+// Overload the ++ unary operator. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class ThreeD { 
+  int x, y, z; // 3-D coordinates 
+public: 
+  ThreeD() { x = y = z = 0; } 
+  ThreeD(int i, int j, int k) {x = i; y = j; z = k; } 
+ 
+  ThreeD operator++(); // prefix version of ++ 
+ 
+  void show() ; 
+} ; 
+ 
+// Overload the prefix version of ++. 
+ThreeD ThreeD::operator++() 
+{ 
+  x++; // increment x, y, and z  
+  y++;  
+  z++; 
+  return *this; 
+} 
+ 
+// Show X, Y, Z coordinates. 
+void ThreeD::show() 
+{ 
+  cout << x << ", "; 
+  cout << y << ", "; 
+  cout << z << "\n"; 
+} 
+ 
+int main() 
+{ 
+  ThreeD a(1, 2, 3); 
+ 
+  cout << "Original value of a: "; 
+  a.show(); 
+ 
+  ++a;  // increment a 
+  cout << "Value after ++a: "; 
+  a.show(); 
+ 
+  return 0; 
+}
+
+listing 19
+// Overload the postfix version of ++. 
+ThreeD ThreeD::operator++(int notused) 
+{ 
+  ThreeD temp = *this; // save original value 
+ 
+  x++;  // increment x, y, and z 
+  y++; 
+  z++; 
+  return temp; // return original value 
+}
+
+listing 20
+// Demonstrate prefix and postfix ++. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class ThreeD { 
+  int x, y, z; // 3-D coordinates 
+public: 
+  ThreeD() { x = y = z = 0; } 
+  ThreeD(int i, int j, int k) {x = i; y = j; z = k; } 
+ 
+  ThreeD operator++(); // prefix version of ++ 
+  ThreeD operator++(int notused); // postfix version of ++ 
+ 
+  void show() ; 
+}; 
+ 
+// Overload the prefix version of ++. 
+ThreeD ThreeD::operator++() 
+{ 
+  x++;  // increment x, y, and z 
+  y++; 
+  z++; 
+  return *this; // return altered value 
+} 
+ 
+// Overload the postfix version of ++. 
+ThreeD ThreeD::operator++(int notused) 
+{ 
+  ThreeD temp = *this; // save original value 
+ 
+  x++; // increment x, y, and z 
+  y++; 
+  z++; 
+  return temp; // return original value 
+} 
+ 
+// Show X, Y, Z coordinates. 
+void ThreeD::show( ) 
+{ 
+  cout << x << ", "; 
+  cout << y << ", "; 
+  cout << z << "\n"; 
+} 
+ 
+int main() 
+{ 
+  ThreeD a(1, 2, 3); 
+  ThreeD b; 
+ 
+  cout << "Original value of a: "; 
+  a.show(); 
+ 
+  cout << "\n"; 
+ 
+  ++a; // prefix increment 
+  cout << "Value after ++a: "; 
+  a.show(); 
+ 
+  a++; // postfix increment 
+  cout << "Value after a++: "; 
+  a.show(); 
+ 
+  cout << "\n"; 
+ 
+  b = ++a; // b receives a's value after increment 
+  cout << "Value of a after b = ++a: "; 
+  a.show(); 
+  cout << "Value of b after b = ++a: "; 
+  b.show(); 
+ 
+  cout << "\n"; 
+ 
+  b = a++; // a receives c's value prior to increment 
+  cout << "Value of a after b = a++: "; 
+  a.show(); 
+  cout << "Value of b after b = a++: "; 
+  b.show(); 
+ 
+  return 0; 
+}
+
+listing 21
+// Use friend operator functions. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class ThreeD { 
+  int x, y, z; // 3-D coordinates 
+public: 
+  ThreeD() { x = y = z = 0; } 
+  ThreeD(int i, int j, int k) { x = i; y = j; z = k; } 
+ 
+  friend ThreeD operator+(ThreeD op1, ThreeD op2); 
+ 
+  void show() ; 
+} ; 
+ 
+// The + is now a friend function. 
+ThreeD operator+(ThreeD op1, ThreeD op2) 
+{ 
+  ThreeD temp; 
+ 
+  temp.x = op1.x + op2.x;  
+  temp.y = op1.y + op2.y;  
+  temp.z = op1.z+ op2.z;  
+  return temp; 
+} 
+ 
+// Show X, Y, Z coordinates. 
+void ThreeD::show() 
+{ 
+  cout << x << ", "; 
+  cout << y << ", "; 
+  cout << z << "\n"; 
+} 
+ 
+int main() 
+{ 
+  ThreeD a(1, 2, 3), b(10, 10, 10), c; 
+ 
+  cout << "Original value of a: "; 
+  a.show(); 
+  cout << "Original value of b: "; 
+  b.show(); 
+ 
+  cout << "\n"; 
+ 
+  c = a + b; // add a and b together 
+  cout << "Value of c after c = a + b: "; 
+  c.show(); 
+ 
+  cout << "\n"; 
+ 
+  c = a + b + c; // add a, b and c together 
+  cout << "Value of c after c = a + b + c: "; 
+  c.show(); 
+ 
+  cout << "\n"; 
+ 
+  c = b = a;  // demonstrate multiple assignment 
+  cout << "Value of c after c = b = a: "; 
+  c.show(); 
+  cout << "Value of b after c = b = a: "; 
+  b.show(); 
+ 
+  return 0; 
+}
+
+listing 22
+// Overload for integer + object and object + integer. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class ThreeD { 
+  int x, y, z; // 3-D coordinates 
+public: 
+  ThreeD() { x = y = z = 0; } 
+  ThreeD(int i, int j, int k) { x = i; y = j; z = k; } 
+ 
+  friend ThreeD operator+(ThreeD op1, int op2); 
+  friend ThreeD operator+(int op1, ThreeD obp); 
+ 
+  void show() ; 
+} ; 
+ 
+// This allows ThreedD + int 
+ThreeD operator+(ThreeD op1, int op2) 
+{ 
+  ThreeD temp; 
+ 
+  temp.x = op1.x + op2;  
+  temp.y = op1.y + op2;  
+  temp.z = op1.z + op2;  
+  return temp; 
+} 
+ 
+// This allows int + ThreedD 
+ThreeD operator+(int op1, ThreeD op2) 
+{ 
+  ThreeD temp; 
+ 
+  temp.x = op2.x + op1;  
+  temp.y = op2.y + op1;  
+  temp.z = op2.z + op1;  
+  return temp; 
+} 
+ 
+// Show X, Y, Z coordinates. 
+void ThreeD::show() 
+{ 
+  cout << x << ", "; 
+  cout << y << ", "; 
+  cout << z << "\n"; 
+} 
+ 
+int main() 
+{ 
+  ThreeD a(1, 2, 3), b; 
+ 
+  cout << "Original value of a: "; 
+  a.show(); 
+ 
+  cout << "\n"; 
+ 
+  b = a + 10; // object + integer 
+  cout << "Value of b after b = a + 10: "; 
+  b.show(); 
+ 
+  cout << "\n"; 
+ 
+  b = 10 + a; // integer + object 
+  cout << "Value of b after b = 10 + a: "; 
+  b.show(); 
+ 
+  return 0; 
+}
+
+listing 23
+/* Overload prefix ++ using a friend function. 
+   This requires the use of a reference parameter. */ 
+ThreeD operator++(ThreeD &op1) 
+{ 
+  op1.x++; 
+  op1.y++; 
+  op1.z++; 
+  return op1; 
+} 
+ 
+/* Overload postfix ++ using a friend function. 
+   This requires the use of a reference parameter. */ 
+ThreeD operator++(ThreeD &op1, int notused) 
+{ 
+  ThreeD temp = op1; 
+ 
+  op1.x++; 
+  op1.y++; 
+  op1.z++; 
+  return temp; 
+}
+
+listing 24
+// Overload ==. 
+bool ThreeD::operator==(ThreeD op2) 
+{ 
+  if((x == op2.x) && (y == op2.y) && (z == op2.z)) 
+    return true; 
+  else 
+    return false; 
+}
+
+listing 25
+/*  
+   Project 9-1  
+  
+   A set class for characters.   
+*/  
+#include <iostream> 
+using namespace std; 
+   
+const int MaxSize = 100; 
+ 
+class Set {     
+  int len; // number of members  
+  char members[MaxSize]; // this array holds the set     
+ 
+  /* The find() function is private because it  
+     is not used outside the Set class. */  
+  int find(char ch); // find an element 
+ 
+public: 
+  
+  // Construct a null set.  
+  Set() { len = 0; }  
+  
+  // Return the number of elements in the set. 
+  int getLength() { return len; }  
+ 
+  void showset(); // display the set 
+  bool isMember(char ch);  // check for membership 
+ 
+  Set operator +(char ch); // add an element   
+  Set operator -(char ch); // remove an element 
+ 
+  Set operator +(Set ob2); // set union 
+  Set operator -(Set ob2); // set difference   
+};     
+ 
+/* Return the index of the element  
+   specified by ch, or -1 if not found. */ 
+int Set::find(char ch) {  
+  int i;  
+      
+  for(i=0; i < len; i++)  
+    if(members[i] == ch) return i;  
+  
+  return -1;  
+}  
+ 
+// Show the set. 
+void Set::showset() { 
+  cout << "{ "; 
+  for(int i=0; i<len; i++) 
+    cout << members[i] << " "; 
+ 
+  cout << "}\n"; 
+} 
+  
+/* Return true if ch is a member of the set. 
+   Return false otherwise. */ 
+bool Set::isMember(char ch) {  
+  if(find(ch) != -1) return true; 
+  return false; 
+}  
+ 
+// Add a unique element to a set.     
+Set Set::operator +(char ch) {   
+  Set newset; 
+ 
+  if(len == MaxSize) { 
+    cout << "Set is full.\n"; 
+    return *this; // return existing set 
+  } 
+ 
+  newset = *this; // duplicate the existing set 
+     
+  // see if element already exists  
+  if(find(ch) == -1) { // if not found, then add  
+    // add new element to new set  
+    newset.members[newset.len] = ch;  
+    newset.len++;  
+  }  
+  return newset; // return updated set  
+}     
+  
+// Remove an element from the set.     
+Set Set::operator -(char ch) {   
+  Set newset; 
+  int i = find(ch); // i will be -1 if element not found  
+  
+  // copy and compress the remaining elements  
+  for(int j=0; j < len; j++)  
+    if(j != i) newset = newset + members[j];  
+  
+  return newset;  
+}     
+  
+// Set union.  
+Set Set::operator +(Set ob2) {   
+  Set newset = *this; // copy the first set  
+  
+  // Add unique elements from second set. 
+  for(int i=0; i < ob2.len; i++)   
+    newset = newset + ob2.members[i];  
+  
+  return newset; // return updated set  
+}  
+  
+// Set difference.  
+Set Set::operator -(Set ob2) {   
+  Set newset = *this; // copy the first set  
+  
+  // Subtract elements from second set.  
+  for(int i=0; i < ob2.len; i++)   
+    newset = newset - ob2.members[i];  
+  
+  return newset; // return updated set  
+}  
+ 
+// Demonstrate the Set class.     
+int main() {     
+  // construct 10-element empty Set    
+  Set s1;     
+  Set s2; 
+  Set s3; 
+  
+  s1 = s1 + 'A';  
+  s1 = s1 + 'B';  
+  s1 = s1 + 'C';  
+  
+  cout << "s1 after adding A B C: ";   
+  s1.showset(); 
+ 
+  cout << "\n"; 
+ 
+  cout << "Testing for membership using isMember().\n";  
+  if(s1.isMember('B')) 
+    cout << "B is a member of s1.\n"; 
+  else 
+    cout << "B is not a member of s1.\n"; 
+ 
+  if(s1.isMember('T')) 
+    cout << "T is a member of s1.\n"; 
+  else 
+    cout << "T is not a member of s1.\n"; 
+ 
+  cout << "\n"; 
+ 
+  s1 = s1 - 'B';  
+  cout << "s1 after s1 = s1 - 'B': ";   
+  s1.showset(); 
+  
+  s1 = s1 - 'A';  
+  cout << "s1 after s1 = s1 - 'A': ";   
+  s1.showset(); 
+  
+  s1 = s1 - 'C';  
+  cout << "s1 after a1 = s1 - 'C': ";   
+  s1.showset(); 
+ 
+  cout << "\n"; 
+ 
+  s1 = s1 + 'A';  
+  s1 = s1 + 'B';  
+  s1 = s1 + 'C';  
+  cout << "s1 after adding A B C: ";   
+  s1.showset(); 
+  
+  cout << "\n"; 
+ 
+  s2 = s2 + 'A';  
+  s2 = s2 + 'X';  
+  s2 = s2 + 'W';  
+  
+  cout << "s2 after adding A X W: ";   
+  s2.showset(); 
+  
+  cout << "\n"; 
+ 
+  s3 = s1 + s2;  
+  cout << "s3 after s3 = s1 + s2: ";   
+  s3.showset(); 
+  
+  s3 = s3 - s1;  
+  cout << "s3 after s3 - s1: ";   
+  s3.showset(); 
+  
+  cout << "\n"; 
+ 
+  cout << "s2 after s2 = s2 - s2: ";   
+  s2 = s2 - s2;  // clear s2  
+  s2.showset(); 
+  
+  cout << "\n"; 
+ 
+  s2 = s2 + 'C'; // add ABC in reverse order  
+  s2 = s2 + 'B';  
+  s2 = s2 + 'A';  
+ 
+  cout << "s2 after adding C B A: ";   
+  s2.showset(); 
+  
+  return 0; 
+}
+
+

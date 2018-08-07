@@ -1,0 +1,738 @@
+listing 1
+// Magic Number program. 
+ 
+#include <iostream> 
+#include <cstdlib>  
+using namespace std; 
+ 
+int main() 
+{ 
+  int magic;  // magic number 
+  int guess;  // user's guess 
+ 
+  magic = rand(); // get a random number 
+   
+  cout << "Enter your guess: "; 
+  cin >> guess; 
+ 
+  if(guess == magic) cout << "** Right **"; 
+ 
+  return 0; 
+}
+
+listing 2
+// Magic Number program: 1st improvement. 
+ 
+#include <iostream> 
+#include <cstdlib> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int magic;  // magic number 
+  int guess;  // user's guess 
+ 
+  magic = rand(); // get a random number 
+   
+  cout << "Enter your guess: "; 
+  cin >> guess; 
+ 
+  if(guess == magic) cout << "** Right **"; 
+  else cout << "...Sorry, you're wrong."; 
+ 
+  return 0; 
+}
+
+listing 3
+// Use an int value to control the if. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int a, b; 
+ 
+  cout << "Enter numerator: "; 
+  cin >> a; 
+  cout << "Enter denominator: "; 
+  cin >> b; 
+ 
+  if(b) cout << "Result: " << a / b << '\n'; 
+  else cout << "Cannot divide by zero.\n"; 
+ 
+  return 0; 
+}
+
+listing 4
+if(b == 0) cout << a/b << '\n';
+
+listing 5
+if(i) { 
+  if(j) result = 1; 
+  if(k) result = 2;  
+  else result = 3; // this else is associated with if(k) 
+} 
+else result = 4; // this else is associated with if(i)
+
+listing 6
+// Magic Number program: 2nd improvement. 
+ 
+#include <iostream> 
+#include <cstdlib> 
+ 
+using namespace std; 
+ 
+int main() 
+{ 
+  int magic;  // magic number 
+  int guess;  // user's guess  
+ 
+  magic = rand(); // get a random number 
+   
+  cout << "Enter your guess: "; 
+  cin >> guess; 
+ 
+  if (guess == magic) { 
+    cout << "** Right **\n"; 
+    cout << magic << " is the magic number.\n"; 
+  } 
+  else { 
+    cout << "...Sorry, you're wrong."; 
+    if(guess > magic) cout <<" Your guess is too high.\n"; 
+    else cout << " Your guess is too low.\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 7
+// Demonstrate an if-else-if ladder. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int x; 
+ 
+  for(x=0; x<6; x++) { 
+    if(x==1) cout << "x is one\n"; 
+    else if(x==2) cout << "x is two\n"; 
+    else if(x==3) cout << "x is three\n"; 
+    else if(x==4) cout << "x is four\n"; 
+    else cout << "x is not between 1 and 4\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 8
+/* 
+   A simple proverb generator that 
+   demonstrates the switch. 
+*/ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int num; 
+ 
+  cout << "Enter a number from 1 to 3: "; 
+  cin >> num; 
+ 
+  switch(num) { 
+    case 1:  
+      cout << "A rolling stone gathers no moss.\n"; 
+      break; 
+    case 2:  
+      cout << "A bird in hand is worth two in the bush.\n"; 
+      break; 
+    case 3:  
+      cout << "A fool and his money are soon parted.\n"; 
+      break; 
+    default: 
+      cout << "You must enter either 1, 2, or 3.\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 9
+// A switch without break statements. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int i; 
+ 
+  for(i=0; i<5; i++) { 
+    switch(i) { 
+      case 0: cout << "less than 1\n"; 
+      case 1: cout << "less than 2\n"; 
+      case 2: cout << "less than 3\n"; 
+      case 3: cout << "less than 4\n"; 
+      case 4: cout << "less than 5\n"; 
+    } 
+    cout << '\n'; 
+  } 
+ 
+  return 0; 
+}
+
+listing 10
+switch(i) { 
+  case 1: 
+  case 2: 
+  case 3:  
+    cout << "i is less than 4"; 
+    break; 
+  case 4:  
+    cout << "i is 4"; 
+    break;
+
+listing 11
+switch(ch1) { 
+  case 'A': cout << "This A is part of outer switch"; 
+    switch(ch2) { 
+      case 'A':  
+        cout << "This A is part of inner switch"; 
+        break; 
+      case 'B': // ... 
+    } 
+    break; 
+  case 'B': // ...
+
+listing 12
+/* 
+   Project 3-1 
+ 
+   A simple help system. 
+*/ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+  char choice; 
+ 
+  cout << "Help on:\n"; 
+  cout << "  1. if\n"; 
+  cout << "  2. switch\n"; 
+  cout << "Choose one: "; 
+  cin >> choice; 
+ 
+  cout << "\n"; 
+  
+  switch(choice) { 
+    case '1': 
+      cout << "The if:\n\n"; 
+      cout << "if(condition) statement;\n"; 
+      cout << "else statement;\n"; 
+      break; 
+    case '2': 
+      cout << "The switch:\n\n"; 
+      cout << "switch(expression) {\n"; 
+      cout << "  case constant:\n"; 
+      cout << "    statement sequence\n"; 
+      cout << "    break;\n"; 
+      cout << "  // ...\n"; 
+      cout << "}\n"; 
+      break; 
+    default: 
+      cout << "Selection not found.\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 13
+// Show square roots of 1 to 99. 
+ 
+#include <iostream> 
+#include <cmath> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int num; 
+  double sq_root; 
+ 
+  for(num=1; num < 100; num++) { 
+    sq_root = sqrt((double) num); 
+    cout << num << " " << sq_root << '\n'; 
+  } 
+ 
+  return 0; 
+}
+
+listing 14
+// A negatively running for loop. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int i; 
+ 
+  for(i=50; i >= -50; i = i-10) cout << i << ' '; 
+ 
+  return 0; 
+}
+
+listing 15
+for(count=10; count < 5; count++) 
+  cout << count; // this statement will not execute
+
+listing 16
+for(x=0, y=10; x <= y; ++x, --y)  
+  cout << x << ' ' << y << '\n';
+
+listing 17
+/* 
+   Loop until a random number that is 
+   greater than 20,000. 
+*/ 
+ 
+#include <iostream>  
+#include <cstdlib>  
+using namespace std;  
+  
+int main()  
+{  
+  int i;  
+  int r; 
+  
+ 
+  r = rand(); 
+ 
+  for(i=0; r <= 20000; i++) 
+    r = rand(); 
+     
+  
+  cout << "Number is " << r << 
+    ". It was generated on try " << i << "."; 
+  
+  return 0;  
+}
+
+listing 18
+// A for loop with no increment. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int x; 
+ 
+  for(x=0; x != 123; ) { 
+    cout << "Enter a number: "; 
+    cin >> x; 
+  } 
+ 
+  return 0; 
+}
+
+listing 19
+x = 0; 
+ 
+for( ; x<10; ) 
+{ 
+  cout << x << ' '; 
+  ++x; 
+}
+
+listing 20
+for(;;) 
+{ 
+  //... 
+}
+
+listing 21
+// The body of a for loop can be empty. 
+ 
+#include <iostream>  
+#include <cstdlib>  
+using namespace std;  
+  
+int main()  
+{  
+  int i;  
+  int sum = 0; 
+  
+ 
+  // sum the numbers from 1 through 10 
+  for(i=1; i <= 10; sum += i++) ; 
+  
+  cout << "Sum is " << sum; 
+ 
+  return 0;  
+}
+
+listing 22
+// Declare loop control variable inside the for. 
+ 
+#include <iostream> 
+using namespace std; 
+  
+int main() { 
+  int sum = 0; 
+  int fact = 1; 
+ 
+  // compute the factorial of the numbers through 5  
+  for(int i = 1; i <= 5; i++) {  
+    sum += i;  // i is known throughout the loop 
+    fact *= i; 
+  } 
+ 
+  // but, i is not known here. 
+ 
+  cout << "Sum is " << sum << "\n"; 
+  cout << "Factorial is " << fact; 
+ 
+  return 0; 
+}
+
+listing 23
+/* 
+   This program displays all printable characters, 
+   including the extended character set, if one exists. 
+*/ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  unsigned char ch; 
+ 
+  ch = 32; 
+  while(ch) { 
+    cout << ch; 
+    ch++; 
+  } 
+ 
+  return 0; 
+}
+
+listing 24
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int len; 
+ 
+  cout << "Enter length (1 to 79): "; 
+  cin >> len; 
+ 
+  while(len>0 && len<80)  { 
+    cout << '.'; 
+    len--; 
+  } 
+ 
+  return 0; 
+}
+
+listing 25
+while(rand() != 100) ;
+
+listing 26
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int num; 
+ 
+  do { 
+    cout << "Enter a number (100 to stop): "; 
+    cin >> num; 
+  } while(num != 100); 
+ 
+  return 0; 
+}
+
+listing 27
+// Magic Number program: 3rd improvement.  
+ 
+#include <iostream> 
+#include <cstdlib> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int magic; // magic number 
+  int guess; // user's guess 
+ 
+  magic = rand(); // get a random number 
+   
+  do { 
+    cout << "Enter your guess: "; 
+    cin >> guess; 
+    if(guess == magic) { 
+      cout << "** Right ** "; 
+      cout << magic << " is the magic number.\n"; 
+    } 
+    else { 
+      cout << "...Sorry, you're wrong."; 
+      if(guess > magic) 
+         cout << " Your guess is too high.\n"; 
+      else cout << " Your guess is too low.\n"; 
+    } 
+  } while(guess != magic); 
+ 
+  return 0; 
+}
+
+listing 28
+/* 
+   Project 3-2 
+ 
+   An improved Help system that uses a 
+   a do-while to process a menu selection. 
+*/ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+  char choice; 
+ 
+  do { 
+    cout << "Help on:\n"; 
+    cout << "  1. if\n"; 
+    cout << "  2. switch\n"; 
+    cout << "  3. for\n"; 
+    cout << "  4. while\n"; 
+    cout << "  5. do-while\n"; 
+    cout << "Choose one: "; 
+ 
+    cin >> choice; 
+ 
+  } while( choice < '1' || choice > '5'); 
+ 
+  cout << "\n\n"; 
+  
+  switch(choice) { 
+    case '1': 
+      cout << "The if:\n\n"; 
+      cout << "if(condition) statement;\n"; 
+      cout << "else statement;\n"; 
+      break; 
+    case '2': 
+      cout << "The switch:\n\n"; 
+      cout << "switch(expression) {\n"; 
+      cout << "  case constant:\n"; 
+      cout << "    statement sequence\n"; 
+      cout << "    break;\n"; 
+      cout << "  // ...\n"; 
+      cout << "}\n"; 
+      break; 
+    case '3': 
+      cout << "The for:\n\n"; 
+      cout << "for(init; condition; increment)"; 
+      cout << " statement;\n"; 
+      break; 
+    case '4': 
+      cout << "The while:\n\n"; 
+      cout << "while(condition) statement;\n"; 
+      break; 
+    case '5': 
+      cout << "The do-while:\n\n"; 
+      cout << "do {\n"; 
+      cout << "  statement;\n"; 
+      cout << "} while (condition);\n"; 
+      break; 
+  } 
+ 
+  return 0; 
+} 
+
+
+listing 29
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int t; 
+ 
+  // Loops from 0 to 9, not to 100! 
+  for(t=0; t<100; t++) { 
+    if(t==10) break; 
+    cout << t << ' '; 
+  } 
+ 
+  return 0; 
+}
+
+listing 30
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int t, count;  
+ 
+  for(t=0; t<10; t++) { 
+    count = 1; 
+    for(;;) { 
+      cout << count << ' '; 
+      count++; 
+      if(count==10) break; 
+    }  
+    cout << '\n'; 
+  } 
+ 
+  return 0; 
+} 
+
+
+listing 31
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int x; 
+ 
+  for(x=0; x<=100; x++) { 
+    if(x%2) continue; 
+    cout << x << ' '; 
+  } 
+ 
+  return 0; 
+}
+
+listing 32
+/*  
+   Project 3-3  
+  
+   The finished Help system that process multiple requests.  
+*/  
+  
+#include <iostream>  
+using namespace std;  
+   
+int main() {  
+  char choice;  
+  
+  for(;;) {  
+    do {  
+      cout << "Help on:\n";  
+      cout << "  1. if\n";  
+      cout << "  2. switch\n";  
+      cout << "  3. for\n";  
+      cout << "  4. while\n";  
+      cout << "  5. do-while\n";  
+      cout << "  6. break\n";  
+      cout << "  7. continue\n";  
+      cout << "  8. goto\n";  
+      cout << "Choose one (q to quit): ";  
+      cin >> choice;  
+    } while( choice < '1' || choice > '8' && choice != 'q');  
+  
+    if(choice == 'q') break;  
+  
+    cout << "\n\n";  
+   
+    switch(choice) {  
+      case '1':  
+        cout << "The if:\n\n";  
+        cout << "if(condition) statement;\n";  
+        cout << "else statement;\n";  
+        break;  
+      case '2':  
+        cout << "The switch:\n\n";  
+        cout << "switch(expression) {\n";  
+        cout << "  case constant:\n";  
+        cout << "    statement sequence\n";  
+        cout << "    break;\n";  
+        cout << "  // ...\n";  
+        cout << "}\n";  
+        break;  
+      case '3':  
+        cout << "The for:\n\n";  
+        cout << "for(init; condition; increment)";  
+        cout << " statement;\n";  
+        break;  
+      case '4':  
+        cout << "The while:\n\n";  
+        cout << "while(condition) statement;\n";  
+        break;  
+      case '5':  
+        cout << "The do-while:\n\n";  
+        cout << "do {\n";  
+        cout << "  statement;\n";  
+        cout << "} while (condition);\n";  
+        break;  
+      case '6':  
+        cout << "The break:\n\n";  
+        cout << "break;\n";  
+        break;  
+      case '7':  
+        cout << "The continue:\n\n";  
+        cout << "continue;\n";  
+        break;  
+      case '8':  
+        cout << "The goto:\n\n";  
+        cout << "goto label;\n";  
+        break;  
+    }  
+    cout << "\n";  
+  }  
+  
+  return 0;  
+} 
+
+
+listing 33
+/*  
+   Use nested loops to find factors of numbers 
+   between 2 and 100. 
+*/ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+ 
+  for(int i=2; i <= 100; i++) { 
+    cout << "Factors of " << i << ": "; 
+ 
+    for(int j = 2; j < i; j++) 
+      if((i%j) == 0) cout << j << " "; 
+ 
+    cout << "\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 34
+x = 1; 
+loop1: 
+  x++; 
+  if(x < 100) goto loop1;
+
+listing 35
+for(...) { 
+  for(...) { 
+    while(...) { 
+      if(...) goto stop; 
+      . 
+      . 
+      . 
+    } 
+  } 
+} 
+stop: 
+  cout << "Error in program.\n";
+
+

@@ -1,0 +1,771 @@
+listing 1
+// A program that uses the Vehicle class.   
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// Declare the Vehicle class. 
+class Vehicle {  
+public: 
+  int passengers; // number of passengers  
+  int fuelcap;    // fuel capacity in gallons 
+  int mpg;        // fuel consumption in miles per gallon 
+}; 
+  
+int main() {  
+  Vehicle minivan; // create a Vehicle object 
+  int range;  
+ 
+  // Assign values to fields in minivan. 
+  minivan.passengers = 7; 
+  minivan.fuelcap = 16; 
+  minivan.mpg = 21; 
+  
+  // Compute the range assuming a full tank of gas. 
+  range = minivan.fuelcap * minivan.mpg; 
+  
+  cout << "Minivan can carry " <<  minivan.passengers << 
+          " with a range of " << range << "\n";  
+ 
+  return 0; 
+} 
+
+
+listing 2
+// This program creates two Vehicle objects.   
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// Declare the Vehicle class. 
+class Vehicle {  
+public: 
+  int passengers; // number of passengers  
+  int fuelcap;    // fuel capacity in gallons 
+  int mpg;        // fuel consumption in miles per gallon 
+}; 
+  
+int main() {  
+  Vehicle minivan; // create a Vehicle object 
+  Vehicle sportscar; // create another object  
+ 
+  int range1, range2;  
+ 
+  // Assign values to fields in minivan. 
+  minivan.passengers = 7; 
+  minivan.fuelcap = 16; 
+  minivan.mpg = 21; 
+  
+  // Assign values to fields in sportscar. 
+  sportscar.passengers = 2; 
+  sportscar.fuelcap = 14; 
+  sportscar.mpg = 12; 
+ 
+  // Compute the ranges assuming a full tank of gas. 
+  range1 = minivan.fuelcap * minivan.mpg; 
+  range2 = sportscar.fuelcap * sportscar.mpg; 
+  
+  cout << "Minivan can carry " <<  minivan.passengers << 
+          " with a range of " << range1 << "\n";  
+ 
+  cout << "Sportscar can carry " <<  sportscar.passengers << 
+          " with a range of " << range2 << "\n";  
+  
+  return 0; 
+} 
+
+
+listing 3
+// Declare the Vehicle class. 
+class Vehicle {  
+public: 
+  int passengers; // number of passengers  
+  int fuelcap;    // fuel capacity in gallons 
+  int mpg;        // fuel consumption in miles per gallon 
+ 
+  int range();   // compute and return the range 
+};
+
+listing 4
+// A program that uses the Vehicle class.   
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// Declare the Vehicle class. 
+class Vehicle {  
+public: 
+  int passengers; // number of passengers  
+  int fuelcap;    // fuel capacity in gallons 
+  int mpg;        // fuel consumption in miles per gallon 
+ 
+  int range();   // compute and return the range 
+}; 
+ 
+// Implement the range member function.  
+int Vehicle::range() { 
+  return mpg * fuelcap; 
+} 
+ 
+int main() {  
+  Vehicle minivan; // create a Vehicle object 
+  Vehicle sportscar; // create another object  
+ 
+  int range1, range2;  
+ 
+  // Assign values to fields in minivan. 
+  minivan.passengers = 7; 
+  minivan.fuelcap = 16; 
+  minivan.mpg = 21; 
+  
+  // Assign values to fields in sportscar. 
+  sportscar.passengers = 2; 
+  sportscar.fuelcap = 14; 
+  sportscar.mpg = 12; 
+ 
+  // Compute the ranges assuming a full tank of gas. 
+  range1 = minivan.range(); 
+  range2 = sportscar.range(); 
+  
+  cout << "Minivan can carry " <<  minivan.passengers << 
+          " with a range of " << range1 << "\n";  
+ 
+  cout << "Sportscar can carry " <<  sportscar.passengers << 
+          " with a range of " << range2 << "\n";  
+  
+  return 0; 
+}
+
+listing 5
+/*  
+   Project 8-1  
+  
+   Convert the Help system from Project 3-3 into  
+   a Help class. 
+*/  
+  
+#include <iostream>  
+using namespace std;  
+ 
+// A class that encapsulates a help system.   
+class Help { 
+public: 
+  void helpon(char what); 
+  void showmenu(); 
+  bool isvalid(char ch); 
+}; 
+ 
+// Display help information. 
+void Help::helpon(char what) { 
+  switch(what) {  
+    case '1':  
+      cout << "The if:\n\n";  
+      cout << "if(condition) statement;\n";  
+      cout << "else statement;\n";  
+      break;  
+    case '2':  
+      cout << "The switch:\n\n";  
+      cout << "switch(expression) {\n";  
+      cout << "  case constant:\n";  
+      cout << "    statement sequence\n";  
+      cout << "    break;\n";  
+      cout << "  // ...\n";  
+      cout << "}\n";  
+      break;  
+    case '3':  
+      cout << "The for:\n\n";  
+      cout << "for(init; condition; increment)";  
+      cout << " statement;\n";  
+      break;  
+    case '4':  
+      cout << "The while:\n\n";  
+      cout << "while(condition) statement;\n";  
+      break;  
+    case '5':  
+      cout << "The do-while:\n\n";  
+      cout << "do {\n";  
+      cout << "  statement;\n";  
+      cout << "} while (condition);\n";  
+      break;  
+    case '6':  
+      cout << "The break:\n\n";  
+      cout << "break;\n";  
+      break;  
+    case '7':  
+      cout << "The continue:\n\n";  
+      cout << "continue;\n";  
+      break;  
+    case '8':  
+      cout << "The goto:\n\n";  
+      cout << "goto label;\n";  
+      break;  
+  }  
+  cout << "\n";  
+}  
+ 
+// Show the help menu. 
+void Help::showmenu() { 
+  cout << "Help on:\n";  
+  cout << "  1. if\n";  
+  cout << "  2. switch\n";  
+  cout << "  3. for\n";  
+  cout << "  4. while\n";  
+  cout << "  5. do-while\n";  
+  cout << "  6. break\n";  
+  cout << "  7. continue\n";  
+  cout << "  8. goto\n";  
+  cout << "Choose one (q to quit): ";  
+} 
+ 
+// Return true if a selection is valid. 
+bool Help::isvalid(char ch) {  
+  if(ch < '1' || ch > '8' && ch != 'q') 
+    return false; 
+  else 
+    return true; 
+} 
+ 
+int main() 
+{ 
+  char choice; 
+  Help hlpob; // create an instance of the Help class. 
+   
+  // Use the Help object to display information. 
+  for(;;) { 
+    do { 
+      hlpob.showmenu(); 
+      cin >> choice; 
+    } while(!hlpob.isvalid(choice)); 
+  
+    if(choice == 'q') break; 
+    cout << "\n"; 
+ 
+    hlpob.helpon(choice); 
+  } 
+  
+  return 0;  
+}
+
+listing 6
+// A simple constructor and destructor. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+public: 
+  int x; 
+ 
+  // Declare constructor and destructor. 
+  MyClass();  // constructor 
+  ~MyClass(); // destructor 
+};   
+ 
+// Implement MyClass constructor. 
+MyClass::MyClass() { 
+  x = 10; 
+}   
+ 
+// Implement MyClass destructor. 
+MyClass::~MyClass() { 
+  cout << "Destructing...\n"; 
+} 
+   
+int main() {   
+  MyClass ob1; 
+  MyClass ob2; 
+ 
+  cout << ob1.x << " " << ob2.x << "\n"; 
+ 
+  return 0; 
+}
+
+listing 7
+// A parameterized constructor.
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+public: 
+  int x; 
+ 
+  // Declare constructor and destructor. 
+  MyClass(int i);  // constructor 
+  ~MyClass(); // destructor 
+};   
+ 
+// Implement a parameterized constructor. 
+MyClass::MyClass(int i) { 
+    x = i; 
+}   
+ 
+// Implement MyClass destructor. 
+MyClass::~MyClass() { 
+  cout << "Destructing object whose x value is " << 
+           x  <<" \n"; 
+} 
+   
+int main() {   
+  MyClass t1(5); 
+  MyClass t2(19); 
+ 
+  cout << t1.x << " " << t2.x << "\n"; 
+ 
+  return 0; 
+}
+
+listing 8
+// Add a constructor to the vehicle class. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// Declare the Vehicle class. 
+class Vehicle {  
+public: 
+  int passengers; // number of passengers  
+  int fuelcap;    // fuel capacity in gallons 
+  int mpg;        // fuel consumption in miles per gallon 
+ 
+  // This is a constructor for Vehicle. 
+  Vehicle(int p, int f, int m); 
+ 
+  int range();   // compute and return the range 
+}; 
+ 
+// Implement the Vehicle constructor. 
+Vehicle::Vehicle(int p, int f, int m) { 
+  passengers = p; 
+  fuelcap = f; 
+  mpg = m; 
+} 
+ 
+// Implement the range member function.  
+int Vehicle::range() { 
+  return mpg * fuelcap; 
+} 
+ 
+int main() {  
+  // Pass values to Vehicle constructor. 
+  Vehicle minivan(7, 16, 21);  
+  Vehicle sportscar(2, 14, 12); 
+ 
+  int range1, range2;  
+ 
+  // Compute the ranges assuming a full tank of gas. 
+  range1 = minivan.range(); 
+  range2 = sportscar.range(); 
+ 
+  cout << "Minivan can carry " <<  minivan.passengers << 
+          " with a range of " << range1 << "\n";  
+ 
+  cout << "Sportscar can carry " <<  sportscar.passengers << 
+          " with a range of " << range2 << "\n";  
+  
+  return 0; 
+}
+
+listing 9
+// An alternate initialization method. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+public: 
+  int x; 
+ 
+  // Declare constructor and destructor. 
+  MyClass(int i);  // constructor 
+  ~MyClass(); // destructor 
+};   
+ 
+// Implement a parameterized constructor. 
+MyClass::MyClass(int i) { 
+    x = i; 
+}   
+ 
+// Implement MyClass destructor. 
+MyClass::~MyClass() { 
+  cout << "Destructing object whose x value is " << 
+           x  <<" \n"; 
+} 
+   
+int main() {   
+  MyClass ob = 5;  // calls MyClass(5) 
+ 
+  cout << ob.x << "\n"; 
+ 
+  return 0; 
+}
+
+listing 10
+MyClass ob = MyClass(5);
+
+listing 11
+// Demonstrate inline. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class cl { 
+  int i; // private by default 
+public: 
+  int get_i(); 
+  void put_i(int j); 
+} ; 
+ 
+inline int cl::get_i() 
+{ 
+  return i; 
+} 
+ 
+inline void cl::put_i(int j) 
+{ 
+  i = j; 
+} 
+ 
+int main() 
+{ 
+  cl s; 
+ 
+  s.put_i(10); 
+  cout << s.get_i(); 
+ 
+  return 0; 
+}
+
+listing 12
+#include <iostream> 
+using namespace std; 
+ 
+class cl { 
+  int i; // private by default 
+public: 
+  // Automatic inline functions. 
+  int get_i() { return i; } 
+  void put_i(int j) { i = j; } 
+} ; 
+ 
+int main() 
+{ 
+  cl s; 
+ 
+  s.put_i(10); 
+  cout << s.get_i(); 
+ 
+  return 0; 
+}
+
+listing 13
+class cl { 
+  int i; // private by default 
+public: 
+  // inline functions 
+  int get_i() 
+  { 
+    return i; 
+  } 
+ 
+  void put_i(int j) 
+  { 
+     i = j; 
+  } 
+};
+
+listing 14
+// Defines constructor, destructor, and range() function in-line. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// Declare the Vehicle class. 
+class Vehicle {  
+  // These are now private. 
+  int passengers; // number of passengers  
+  int fuelcap;    // fuel capacity in gallons 
+  int mpg;        // fuel consumption in miles per gallon 
+public: 
+  // This is a constructor for Vehicle. 
+  Vehicle(int p, int f, int m) { 
+    passengers = p; 
+    fuelcap = f; 
+    mpg = m; 
+  } 
+ 
+ // Compute and return the range. 
+  int range() { return mpg * fuelcap; } 
+ 
+  // Accessor functions. 
+  int get_passengers() { return passengers; } 
+  int get_fuelcap() { return fuelcap; } 
+  int get_mpg() { return mpg; } 
+}; 
+ 
+int main() {  
+  // Pass values to Vehicle constructor. 
+  Vehicle minivan(7, 16, 21);  
+  Vehicle sportscar(2, 14, 12); 
+ 
+  int range1, range2;  
+ 
+  // Compute the ranges assuming a full tank of gas. 
+  range1 = minivan.range(); 
+  range2 = sportscar.range(); 
+  
+  cout << "Minivan can carry " <<  minivan.get_passengers() << 
+          " with a range of " << range1 << "\n";  
+ 
+  cout << "Sportscar can carry " <<  sportscar.get_passengers() << 
+          " with a range of " << range2 << "\n";  
+  
+  return 0; 
+}
+
+listing 15
+/* 
+   Project 8-2 
+ 
+   A queue class for characters. 
+*/ 
+#include <iostream> 
+using namespace std; 
+ 
+const int maxQsize = 100; 
+ 
+class Queue { 
+  char q[maxQsize]; // this array holds the queue 
+  int size; // the maximun number of elements that the queue can store 
+  int putloc, getloc; // the put and get indices 
+public: 
+ 
+  // Construct a queue of a specific length. 
+  Queue(int len) { 
+    // Queue must be less than max and positive. 
+    if(len > maxQsize) len = maxQsize; 
+    else if(len <= 0) len = 1;  
+ 
+    size = len; 
+    putloc = getloc = 0; 
+  } 
+ 
+  // Put a character into the queue. 
+  void put(char ch) { 
+    if(putloc == size) { 
+      cout << " -- Queue is full.\n"; 
+      return; 
+    } 
+     
+    putloc++; 
+    q[putloc] = ch; 
+  } 
+ 
+  // Get a character from the queue. 
+  char get() { 
+    if(getloc == putloc) { 
+      cout << " -- Queue is empty.\n"; 
+      return 0;  
+    } 
+   
+    getloc++; 
+    return q[getloc]; 
+  } 
+}; 
+ 
+// Demonstrate the Queue class. 
+int main() { 
+  Queue bigQ(100); 
+  Queue smallQ(4); 
+  char ch; 
+  int i; 
+ 
+  cout << "Using bigQ to store the alphabet.\n"; 
+  // put some numbers into bigQ 
+  for(i=0; i < 26; i++) 
+    bigQ.put('A' + i); 
+ 
+  // retrieve and display elements from bigQ 
+  cout << "Contents of bigQ: "; 
+  for(i=0; i < 26; i++) {  
+    ch = bigQ.get(); 
+    if(ch != 0) cout << ch; 
+  } 
+ 
+  cout << "\n\n"; 
+ 
+ 
+  cout << "Using smallQ to generate errors.\n"; 
+ 
+  // Now, use smallQ to generate some errors 
+  for(i=0; i < 5; i++) { 
+    cout << "Attempting to store " << 
+                  (char) ('Z' - i); 
+ 
+    smallQ.put('Z' - i); 
+ 
+    cout << "\n"; 
+  } 
+  cout << "\n"; 
+ 
+  // more errors on smallQ 
+  cout << "Contents of smallQ: "; 
+  for(i=0; i < 5; i++) {  
+    ch = smallQ.get(); 
+ 
+    if(ch != 0) cout << ch; 
+  } 
+ 
+  cout << "\n"; 
+}
+
+listing 16
+// Create an array of objects. 
+ 
+#include <iostream> 
+using namespace std; 
+  
+class MyClass { 
+  int x; 
+public: 
+  void set_x(int i) { x = i; } 
+  int get_x() { return x; } 
+}; 
+ 
+int main() 
+{ 
+  MyClass obs[4]; 
+  int i; 
+ 
+  for(i=0; i < 4; i++) 
+    obs[i].set_x(i); 
+ 
+  for(i=0; i < 4; i++) 
+    cout << "obs[" << i << "].get_x(): " << 
+            obs[i].get_x() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 17
+// Initialize an array of objects. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int x; 
+public: 
+  MyClass(int i) { x = i; } 
+  int get_x() { return x; } 
+}; 
+ 
+int main() 
+{ 
+  MyClass obs[4] = { -1, -2, -3, -4 }; 
+  int i; 
+ 
+  for(i=0; i < 4; i++) 
+    cout << "obs[" << i << "].get_x(): " << 
+            obs[i].get_x() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 18
+MyClass obs[4] = { MyClass(-1), MyClass (-2), 
+                   MyClass (-3), MyClass (-4) };
+
+listing 19
+#include <iostream> 
+using namespace std; 
+ 
+class MyClass { 
+  int x, y; 
+public: 
+  MyClass(int i, int j) { x = i; y = j; } 
+  int get_x() { return x; } 
+  int get_y() { return y; } 
+}; 
+ 
+int main() 
+{ 
+  MyClass obs[4][2] = { 
+    MyClass(1, 2), MyClass(3, 4),  
+    MyClass(5, 6), MyClass(7, 8), 
+    MyClass(9, 10), MyClass(11, 12), 
+    MyClass(13, 14), MyClass(15, 16) 
+  }; 
+ 
+  int i; 
+ 
+  for(i=0; i < 4; i++) { 
+    cout << obs[i][0].get_x() << ' '; 
+    cout << obs[i][0].get_y() << "\n"; 
+    cout << obs[i][1].get_x() << ' '; 
+    cout << obs[i][1].get_y() << "\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 20
+// A simple example using an object pointer. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class P_example { 
+  int num; 
+public: 
+  void set_num(int val) { num = val; } 
+  void show_num(){ cout << num << "\n"; } 
+}; 
+ 
+int main() 
+{ 
+  P_example ob, *p; // declare an object and pointer to it 
+ 
+  ob.set_num(1); // call functions directly on ob 
+  ob.show_num();  
+ 
+  p = &ob; // assign p the address of ob 
+  p->set_num(20); // call functions through a pointer to ob 
+  p->show_num(); 
+ 
+  return 0; 
+}
+
+listing 21
+// Incrementing and decrementing an object pointer. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class P_example { 
+  int num; 
+public: 
+  void set_num(int val) { num = val; } 
+  void show_num(){ cout << num << "\n"; } 
+}; 
+  
+int main() 
+{ 
+  P_example ob[2], *p; 
+ 
+  ob[0].set_num(10);  // access objects directly 
+  ob[1].set_num(20); 
+ 
+  p = &ob[0];  // obtain pointer to first element 
+  p->show_num(); // show value of ob[0] using pointer 
+ 
+  p++;  // advance to next object 
+  p->show_num(); // show value of ob[1] using pointer 
+ 
+  p--;  // retreat to previous object 
+  p->show_num(); // again show value of ob[0] 
+ 
+  return 0; 
+}
+
+

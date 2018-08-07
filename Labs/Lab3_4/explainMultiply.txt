@@ -1,0 +1,18 @@
+Matthew Rowe
+4/7/2018
+
+a) It tells the compiler that the fucion trippleMe does exist below and will be looking to return an int along with taking an int when the function is called.
+
+b) You would need to havr the function declearation before the main function otherwise you would get a compliation error.
+
+c) Yes
+
+int tripleMe(int x){ // this is the start of the function definition.
+
+ int result = x * 3;
+ return result;
+}
+
+d) The first line tells us that the function will take a single int and return an int.
+
+e) The function was called twice in the program specified.

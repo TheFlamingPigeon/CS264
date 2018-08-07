@@ -1,0 +1,769 @@
+listing 1
+// This program contains two functions: main() and myfunc(). 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void myfunc(); // myfunc's protoype 
+ 
+int main() 
+{ 
+  cout << "In main()\n"; 
+ 
+  myfunc(); // call myfunc() 
+ 
+  cout << "Back in main()\n"; 
+ 
+  return 0; 
+} 
+ 
+// This if the function's definition. 
+void myfunc() 
+{ 
+  cout << "Inside myfunc()\n"; 
+}
+
+listing 2
+void box(int length, int width, int height) 
+{ 
+  cout << "volume of box is " << length * width * height << "\n"; 
+}
+
+listing 3
+// A simple program that demonstrates box().  
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void box(int length, int width, int height); // box()'s prototype 
+ 
+int main() 
+{ 
+  box(7, 20, 4); 
+  box(50, 3, 2); 
+  box(8, 6, 9); 
+ 
+  return 0; 
+} 
+ 
+// Compute the volume of a box. 
+void box(int length, int width, int height) 
+{ 
+  cout << "volume of box is " << length * width * height << "\n"; 
+}
+
+listing 4
+// Using return. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void f(); 
+ 
+int main() 
+{ 
+  cout << "Before call\n"; 
+ 
+  f(); 
+ 
+  cout << "After call\n"; 
+   
+  return 0; 
+} 
+ 
+// A void function that uses return. 
+void f() 
+{ 
+  cout << "Inside f()\n"; 
+ 
+  return; // return to caller 
+ 
+  cout <<"This won't display.\n"; 
+}
+
+listing 5
+#include <iostream> 
+using namespace std; 
+ 
+void power(int base, int exp); 
+ 
+int main() 
+{ 
+  power(10, 2);
+  power(10, -2); 
+ 
+  return 0; 
+} 
+ 
+// Raise an integer to a positive power. 
+void power(int base, int exp) 
+{ 
+  int i; 
+ 
+  if(exp < 0) return; /* Can't do negative exponents. */ 
+ 
+  i = 1; 
+ 
+  for( ; exp; exp--) i = base * i; 
+  cout << "The answer is: " << i; 
+}
+
+listing 6
+// Returning a value. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int box(int length, int width, int height); // return the volume 
+ 
+int main() 
+{ 
+  int answer; 
+ 
+  answer = box(10, 11, 3); // assign return value 
+  cout << "The volume is " <<  answer; 
+ 
+  return 0; 
+} 
+ 
+// This function returns a value.  
+int box(int length, int width, int height) 
+{ 
+  return length * width * height ; 
+}
+
+listing 7
+// Returning a double value. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+double box(double length, double width, double height); // use double data 
+ 
+int main() 
+{ 
+  double answer; 
+ 
+  answer = box(10.1, 11.2, 3.3); // assign return value 
+  cout << "The volume is " <<  answer; 
+ 
+  return 0; 
+} 
+ 
+// This version of box uses double data. 
+double box(double length, double width, double height) 
+{ 
+  return length * width * height ; 
+}
+
+listing 8
+int main() 
+{ 
+  // use the return value of box( ) directly 
+  cout << "The volume is " <<  box(10.1, 11.2, 3.3); 
+ 
+  return 0; 
+}
+
+listing 9
+// Use box() in an expression.  
+ 
+#include <iostream>  
+using namespace std;  
+  
+double box(double length, double width, double height); // use double data  
+  
+int main()  
+{  
+  double sum;  
+  
+  sum = box(10.1, 11.2, 3.3) + box(5.5, 6.6, 7.7) + box(4.0, 5.0, 8.0);  
+  
+  cout << "The sum of the volumes is " <<  sum << "\n";  
+  cout << "The average volume is " << sum / 3.0 << "\n";  
+  
+  return 0;  
+}  
+  
+// This version of box uses double data.  
+double box(double length, double width, double height)  
+{  
+  return length * width * height ;  
+}
+
+listing 10
+#include <iostream> 
+using namespace std; 
+ 
+void f1(); 
+ 
+int main() 
+{ 
+  int val = 10; 
+ 
+  cout << "val in main(): " << val << '\n'; 
+  f1(); 
+  cout << "val in main(): " << val << '\n'; 
+ 
+  return 0; 
+} 
+ 
+void f1() 
+{ 
+  int val = 88; 
+ 
+  cout << "val in f1(): " << val << "\n"; 
+}
+
+listing 11
+/* 
+   A local variable is initialized each 
+   time its block is entered. 
+*/ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void f(); 
+ 
+int main() 
+{ 
+   
+  for(int i=0; i < 3; i++) f(); 
+   
+  return 0; 
+} 
+ 
+// num is initialized each time f() is called. 
+void f() 
+{ 
+  int num = 99; 
+ 
+  cout << num << "\n"; 
+ 
+  num++; // this has no lasting effect 
+}
+
+listing 12
+// Variables can be local to a block. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+  int x = 19; // x is known to all code. 
+ 
+  if(x == 19) { 
+    int y = 20; 
+ 
+    cout << "x + y is " << x + y << "\n"; 
+  } 
+ 
+  //  y = 100; // Error!  y not known here. 
+ 
+  return 0; 
+}
+
+listing 13
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  cout << "Enter a number: "; 
+  int a; // declare one variable 
+  cin >> a; 
+ 
+  cout << "Enter a second number: "; 
+  int b; // declare another variable 
+  cin >> b; 
+ 
+  cout << "Product: " << a*b << '\n'; 
+ 
+  return 0; 
+}
+
+listing 14
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int i; 
+  int j; 
+ 
+  i = 10; 
+  j = 100; 
+ 
+  if(j > 0) { 
+    int i; // this i is separate from outer i 
+     
+    i = j / 2; 
+    cout << "inner i: " << i << '\n'; 
+  } 
+ 
+  cout << "outer i: " << i << '\n'; 
+ 
+  return 0; 
+}
+
+listing 15
+// Use a global variable. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void func1(); 
+void func2(); 
+ 
+int count; // This is a global variable.  
+ 
+int main() 
+{ 
+  int i; // This is a local variable  
+ 
+  for(i=0; i<10; i++) { 
+    count = i * 2; 
+    func1(); 
+  } 
+ 
+  return 0; 
+} 
+ 
+void func1() 
+{ 
+  cout << "count: " << count; // access global count 
+  cout << '\n'; // output a newline 
+  func2(); 
+} 
+ 
+void func2() 
+{ 
+  int count; // this is a local variable 
+ 
+  for(count=0; count<3; count++) cout << '.'; 
+}
+
+listing 16
+// Pass a pointer to a function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void f(int *j); // f() declares a pointer parameter 
+ 
+int main() 
+{ 
+  int i; 
+  int *p; 
+ 
+  p = &i; // p now points to i 
+ 
+  f(p); // pass a pointer 
+ 
+  cout << i;  // i is now 100 
+ 
+  return 0; 
+} 
+ 
+// f() receives a pointer to an int. 
+void f(int *j) 
+{ 
+  *j = 100; // var pointed to by j is assigned 100 
+}
+
+listing 17
+// Pass a pointer to a function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void f(int *j); 
+ 
+int main() 
+{ 
+  int i; 
+ 
+  f(&i);  
+ 
+  cout << i; 
+ 
+  return 0; 
+} 
+    
+void f(int *j) 
+{ 
+  *j = 100; // var pointed to by j is assigned 100 
+}
+
+listing 18
+#include <iostream> 
+using namespace std; 
+ 
+void display(int num[10]); 
+ 
+int main() 
+{ 
+  int t[10], i; 
+ 
+  for(i=0; i < 10; ++i) t[i]=i; 
+ 
+  display(t); // pass array t to a function 
+ 
+  return 0; 
+} 
+ 
+// Print some numbers.  
+void display(int num[10]) 
+{ 
+  int i; 
+ 
+  for(i=0; i < 10; i++) cout << num[i] << ' '; 
+}
+
+listing 19
+void display(int num[]) 
+{ 
+  int i; 
+ 
+  for(i=0; i < 10; i++) cout << num[i] << ' '; 
+}
+
+listing 20
+void display(int *num) 
+{ 
+  int i; 
+ 
+  for(i=0; i < 10; i++) cout << num[i] << ' '; 
+}
+
+listing 21
+// Change the contents of an array using a function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void cube(int *n, int num); 
+ 
+int main() 
+{ 
+  int i, nums[10]; 
+ 
+  for(i=0; i < 10; i++) nums[i] = i+1; 
+ 
+  cout << "Original contents: "; 
+  for(i=0; i < 10; i++) cout << nums[i] << ' '; 
+  cout << '\n'; 
+ 
+  cube(nums, 10); // compute cubes 
+ 
+  cout << "Altered contents: "; 
+  for(i=0; i<10; i++) cout << nums[i] << ' '; 
+ 
+  return 0; 
+} 
+ 
+// Cube the elements in an array. 
+void cube(int *n, int num) 
+{ 
+  while(num) { 
+    *n = *n * *n * *n; 
+    num--; 
+    n++; 
+  } 
+}
+
+listing 22
+// Pass a string to a function. 
+ 
+#include <iostream> 
+#include <cstring> 
+#include <cctype>  
+using namespace std; 
+ 
+void strInvertCase(char *str); 
+ 
+int main() 
+{ 
+  char str[80]; 
+ 
+  strcpy(str, "This Is A Test"); 
+ 
+  strInvertCase(str); 
+ 
+  cout << str; // display modified string 
+ 
+  return 0; 
+} 
+ 
+// Invert the case of the letters within a string. 
+void strInvertCase(char *str) 
+{ 
+  while(*str) { 
+ 
+    // invert case 
+    if(isupper(*str)) *str = tolower(*str);  
+    else if(islower(*str)) *str = toupper(*str); 
+ 
+    str++; // move on to next char 
+  } 
+}
+
+listing 23
+// Return a pointer. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+char *get_substr(char *sub, char *str); 
+ 
+int main() 
+{ 
+  char *substr; 
+ 
+  substr = get_substr("three", "one two three four"); 
+ 
+  cout << "substring found: " << substr; 
+ 
+  return 0; 
+} 
+ 
+// Return pointer to substring or null if not found. 
+char *get_substr(char *sub, char *str) 
+{ 
+  int t; 
+  char *p, *p2, *start; 
+ 
+  for(t=0; str[t]; t++) { 
+    p = &str[t]; // reset pointers  
+    start = p;  
+    p2 = sub;     
+    while(*p2 && *p2==*p) { // check for substring 
+      p++; 
+      p2++; 
+    }  
+ 
+    /* If at end of p2 (i.e., substring), then 
+       a match has been found. */ 
+    if(!*p2) 
+      return start; // return pointer to beginning of substring 
+  } 
+  return 0; // no match found 
+}
+
+listing 24
+// Display command-line arguments. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main(int argc, char *argv[]) 
+{ 
+ 
+  for(int i = 0; i < argc; i++) { 
+    cout << argv[i] << "\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 25
+/* This program displays the sum of the two numeric 
+   command line arguments. 
+*/ 
+ 
+#include <iostream> 
+#include <cstdlib> 
+using namespace std; 
+ 
+int main(int argc, char *argv[]) 
+{ 
+ 
+  double a, b; 
+ 
+  if(argc!=3) { 
+    cout << "Usage: add num num\n"; 
+    return 1; 
+  } 
+ 
+  a = atof(argv[1]); // convert first command-line arg 
+  b = atof(argv[2]); // convert second comnand-line arg 
+ 
+  cout << a + b; 
+ 
+  return 0; 
+}
+
+listing 26
+/* This program uses a function prototype to 
+   enforce strong type checking. 
+*/ 
+ 
+void sqr_it(int *i); // prototype 
+ 
+int main() 
+{ 
+  int x; 
+ 
+  x = 10;   
+  sqr_it(x); // Error! Type mismatch! 
+ 
+  return 0; 
+} 
+ 
+void sqr_it(int *i) 
+{ 
+  *i = *i * *i;  
+}
+
+listing 27
+// Use a function's definition as its prototype.  
+ 
+#include <iostream> 
+using namespace std; 
+  
+// Determine is a number is even.  
+bool isEven(int num) {  
+  if(!(num %2)) return true; // num is even  
+  return false;  
+}  
+  
+int main()  
+{  
+  if(isEven(4)) cout << "4 is even\n";  
+  if(isEven(3)) cout << "this won't display";  
+  
+  return 0;  
+}
+
+listing 28
+// Demonstrate recursion. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int factr(int n); 
+int fact(int n); 
+ 
+int main() 
+{ 
+  // use recursive version 
+  cout << "4 factorial is " << factr(4); 
+  cout << '\n'; 
+ 
+  // use iterative version 
+  cout << "4 factorial is " << fact(4); 
+  cout << '\n'; 
+ 
+  return 0; 
+} 
+ 
+// Recursive version. 
+int factr(int n)  
+{ 
+  int answer; 
+ 
+  if(n==1) return(1); 
+  answer = factr(n-1)*n; 
+  return(answer); 
+} 
+ 
+// Iterative version. 
+int fact(int n) 
+{ 
+  int t, answer; 
+ 
+  answer = 1; 
+  for(t=1; t<=n; t++) answer = answer*(t); 
+  return(answer); 
+}
+
+listing 29
+// Print a string backwards using recursion. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void reverse(char *s); 
+ 
+int main() 
+{ 
+  char str[] = "this is a test"; 
+ 
+  reverse(str); 
+ 
+  return 0; 
+} 
+ 
+// Print string backwards. 
+void reverse(char *s) 
+{ 
+  if(*s)  
+    reverse(s+1);  
+  else 
+    return; 
+ 
+  cout << *s; 
+}
+
+listing 30
+/* 
+   Project 5-1 
+   A version of the Quicksort for sorting characters. 
+*/ 
+ 
+#include <iostream> 
+#include <cstring> 
+ 
+using namespace std; 
+ 
+void quicksort(char *items, int len); 
+ 
+void qs(char *items, int left, int right); 
+ 
+int main() { 
+ 
+  char str[] = "jfmckldoelazlkper"; 
+ 
+  cout << "Original order: " << str << "\n"; 
+ 
+  quicksort(str, strlen(str)); 
+ 
+  cout << "Sorted order: " << str << "\n"; 
+ 
+  return 0; 
+ 
+} 
+ 
+// Set up a call to the actual sorting function. 
+void quicksort(char *items, int len) 
+{ 
+  qs(items, 0, len-1); 
+} 
+ 
+// A recursive version of Quicksort for sorting characters. 
+void qs(char *items, int left, int right)  
+{  
+  int i, j;  
+  char x, y;  
+  
+  i = left; j = right;  
+  x = items[( left+right) / 2 ];  
+  
+  do {  
+    while((items[i] < x) && (i < right)) i++;  
+    while((x < items[j]) && (j > left)) j--;  
+  
+    if(i <= j) {  
+      y = items[i];  
+      items[i] = items[j];  
+      items[j] = y;  
+      i++; j--;  
+    }  
+  } while(i <= j);  
+  
+  if(left < j) qs(items, left, j);  
+  if(i < right) qs(items, i, right);  
+}
+
+

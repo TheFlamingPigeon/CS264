@@ -1,0 +1,1140 @@
+listing 1
+// A simple exception handling example. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  try { // start a try block 
+    cout << "Inside try block\n"; 
+    throw 99; // throw an error 
+    cout << "This will not execute"; 
+  } 
+  catch (int i) { // catch an error 
+    cout << "Caught an exception -- value is: "; 
+    cout << i << "\n"; 
+  } 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 2
+// This example will not work. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  try { // start a try block 
+    cout << "Inside try block\n"; 
+    throw 99; // throw an error 
+    cout << "This will not execute"; 
+  } 
+  catch (double i) { // won't work for an int exception 
+    cout << "Caught an exception -- value is: "; 
+    cout << i << "\n"; 
+  } 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 3
+/* Throwing an exception from a function called  
+   from within a try block. */ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void Xtest(int test) 
+{ 
+  cout << "Inside Xtest, test is: " << test << "\n"; 
+  if(test) throw test; 
+} 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  try { // start a try block 
+    cout << "Inside try block\n"; 
+    Xtest(0); 
+    Xtest(1); 
+    Xtest(2); 
+  } 
+  catch (int i) { // catch an error 
+    cout << "Caught an exception -- value is: "; 
+    cout << i << "\n"; 
+  } 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 4
+// A try block can be localized to a function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// A try/catch is reset each time a function is entered. 
+void Xhandler(int test) 
+{ 
+  try{ 
+    if(test) throw test; 
+  } 
+  catch(int i) { 
+    cout << "Caught One!  Ex. #: " << i << '\n'; 
+  } 
+} 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  Xhandler(1); 
+  Xhandler(2); 
+  Xhandler(0); 
+  Xhandler(3); 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 5
+// Use multiple catch statements. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// Different types of exceptions can be caught. 
+void Xhandler(int test) 
+{ 
+  try{ 
+    if(test) throw test; // throw int 
+    else throw "Value is zero"; // throw char * 
+  } 
+  catch(int i) { 
+    cout << "Caught One!  Ex. #: " << i << '\n'; 
+  } 
+  catch(char *str) { 
+    cout << "Caught a string: "; 
+    cout << str << '\n'; 
+  } 
+} 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  Xhandler(1); 
+  Xhandler(2); 
+  Xhandler(0); 
+  Xhandler(3); 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 6
+// Catching derived classes. This program is wrong! 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class B { 
+}; 
+ 
+class D: public B { 
+}; 
+ 
+int main() 
+{ 
+  D derived; 
+ 
+  try { 
+    throw derived; 
+  } 
+  catch(B b) { 
+    cout << "Caught a base class.\n"; 
+  } 
+  catch(D d) { 
+    cout << "This won't execute.\n"; 
+  } 
+ 
+  return 0; 
+}
+
+listing 7
+// This example catches all exceptions. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void Xhandler(int test) 
+{ 
+  try{ 
+    if(test==0) throw test; // throw int 
+    if(test==1) throw 'a'; // throw char 
+    if(test==2) throw 123.23; // throw double 
+  } 
+  catch(...) { // catch all exceptions 
+    cout << "Caught One!\n"; 
+  } 
+} 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  Xhandler(0); 
+  Xhandler(1); 
+  Xhandler(2); 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 8
+// Restricting function throw types. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// This function can only throw ints, chars, and doubles. 
+void Xhandler(int test) throw(int, char, double) 
+{ 
+  if(test==0) throw test;   // throw int 
+  if(test==1) throw 'a';    // throw char 
+  if(test==2) throw 123.23; // throw double 
+} 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  try{ 
+    Xhandler(0); // also, try passing 1 and 2 to Xhandler() 
+  } 
+  catch(int i) { 
+    cout << "Caught int\n"; 
+  } 
+  catch(char c) { 
+    cout << "Caught char\n"; 
+  } 
+  catch(double d) { 
+    cout << "Caught double\n"; 
+  } 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 9
+// Example of "rethrowing" an exception. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+void Xhandler() 
+{ 
+  try { 
+    throw "hello"; // throw a char * 
+  } 
+  catch(char *) { // catch a char * 
+    cout << "Caught char * inside Xhandler\n"; 
+    throw ; // rethrow char * out of function 
+  } 
+} 
+ 
+int main() 
+{ 
+  cout << "start\n"; 
+ 
+  try{ 
+    Xhandler(); 
+  } 
+  catch(char *) { 
+    cout << "Caught char * inside main\n"; 
+  } 
+ 
+  cout << "end"; 
+ 
+  return 0; 
+}
+
+listing 10
+// Function template example. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// This is a function template. 
+template <class X> void swapargs(X &a, X &b) 
+{ 
+  X temp; 
+ 
+  temp = a; 
+  a = b; 
+  b = temp; 
+} 
+ 
+int main() 
+{ 
+  int i=10, j=20; 
+  float x=10.1, y=23.3; 
+  char a='x', b='z'; 
+ 
+  cout << "Original i, j: " << i << ' ' << j << '\n'; 
+  cout << "Original x, y: " << x << ' ' << y << '\n'; 
+  cout << "Original a, b: " << a << ' ' << b << '\n'; 
+ 
+  swapargs(i, j); // swap integers 
+  swapargs(x, y); // swap floats 
+  swapargs(a, b); // swap chars 
+ 
+  cout << "Swapped i, j: " << i << ' ' << j << '\n'; 
+  cout << "Swapped x, y: " << x << ' ' << y << '\n'; 
+  cout << "Swapped a, b: " << a << ' ' << b << '\n'; 
+ 
+  return 0; 
+}
+
+listing 11
+#include <iostream> 
+using namespace std; 
+ 
+template <class Type1, class Type2> 
+  void myfunc(Type1 x, Type2 y) 
+{ 
+  cout << x << ' ' << y << '\n'; 
+} 
+ 
+int main() 
+{ 
+  myfunc(10, "hi"); 
+ 
+  myfunc(0.23, 10L); 
+ 
+  return 0; 
+}
+
+listing 12
+// Overriding a template function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+template <class X> void swapargs(X &a, X &b) 
+{ 
+  X temp; 
+ 
+  temp = a; 
+  a = b; 
+  b = temp; 
+  cout << "Inside template swapargs.\n"; 
+} 
+ 
+// This overrides the generic version of swapargs() for ints. 
+void swapargs(int &a, int &b) 
+{ 
+  int temp; 
+ 
+  temp = a; 
+  a = b; 
+  b = temp; 
+  cout << "Inside swapargs int specialization.\n"; 
+} 
+ 
+int main() 
+{ 
+  int i=10, j=20; 
+  float x=10.1, y=23.3; 
+  char a='x', b='z'; 
+ 
+  cout << "Original i, j: " << i << ' ' << j << '\n'; 
+  cout << "Original x, y: " << x << ' ' << y << '\n'; 
+  cout << "Original a, b: " << a << ' ' << b << '\n'; 
+ 
+  swapargs(i, j); // calls explicitly overloaded swapargs() 
+  swapargs(x, y); // calls generic swapargs() 
+  swapargs(a, b); // calls generic swapargs() 
+ 
+  cout << "Swapped i, j: " << i << ' ' << j << '\n'; 
+  cout << "Swapped x, y: " << x << ' ' << y << '\n'; 
+  cout << "Swapped a, b: " << a << ' ' << b << '\n'; 
+ 
+  return 0; 
+} 
+
+
+listing 13
+// Use the newer-style specialization syntax. 
+template<> void swapargs<int>(int &a, int &b) 
+{ 
+  int temp; 
+ 
+  temp = a; 
+  a = b; 
+  b = temp; 
+  cout << "Inside swapargs int specialization.\n"; 
+}
+
+listing 14
+// A simple generic class. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+template <class T> class MyClass { 
+  T x, y; 
+public: 
+  MyClass(T a, T b) {  
+    x = a; 
+    y = b; 
+  } 
+  T div() { return x/y; } 
+}; 
+ 
+int main() 
+{ 
+  // Create a version of MyClass for doubles. 
+  MyClass<double> d_ob(10.0, 3.0 ); 
+  cout << "double division: " << d_ob.div() << "\n"; 
+ 
+  // Create a version of MyClass for ints. 
+  MyClass<int> i_ob(10, 3); 
+  cout << "integer division: " << i_ob.div() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 15
+/* This example uses two generic data types in a 
+   class definition. */ 
+#include <iostream> 
+using namespace std; 
+ 
+template <class T1, class T2> class MyClass 
+{ 
+  T1 i; 
+  T2 j; 
+public: 
+  MyClass(T1 a, T2 b) { i = a; j = b; } 
+  void show() { cout << i << ' ' << j << '\n'; } 
+}; 
+ 
+int main() 
+{ 
+  MyClass<int, double> ob1(10, 0.23); 
+  MyClass<char, char *> ob2('X', "This is a test"); 
+ 
+  ob1.show(); // show int, double 
+  ob2.show(); // show char, char * 
+ 
+  return 0; 
+}
+
+listing 16
+// Demonstrate class specialization. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+template <class T> class MyClass { 
+  T x; 
+public: 
+  MyClass(T a) {  
+    cout << "Inside generic MyClass\n"; 
+    x = a; 
+  } 
+  T getx() { return x; } 
+}; 
+ 
+// Explicit specialization for int. 
+template <> class MyClass<int> { 
+  int x; 
+public: 
+  MyClass(int a) {  
+    cout << "Inside MyClass<int> specialization\n"; 
+    x = a * a; 
+  } 
+  int getx() { return x; } 
+}; 
+ 
+int main() 
+{ 
+  MyClass<double> d(10.1); 
+  cout << "double: " << d.getx() << "\n\n"; 
+ 
+  MyClass<int> i(5); 
+  cout << "int: " << i.getx() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 17
+/* 
+   Project 12-1 
+ 
+   A template queue class. 
+*/ 
+#include <iostream> 
+using namespace std; 
+ 
+const int maxQsize = 100; 
+ 
+// This creates a generic queue class. 
+template <class QType> class Queue { 
+  QType q[maxQsize]; // this array holds the queue 
+  int size; // maximum number of elements that the queue can store 
+  int putloc, getloc; // the put and get indices 
+public: 
+ 
+  // Construct a queue of a specific length. 
+  Queue(int len) { 
+    // Queue must be less than max and positive. 
+    if(len > maxQsize) len = maxQsize; 
+    else if(len <= 0) len = 1;  
+ 
+    size = len; 
+    putloc = getloc = 0; 
+  } 
+ 
+  // Put a data into the queue. 
+  void put(QType data) { 
+    if(putloc == size) { 
+      cout << " -- Queue is full.\n"; 
+      return; 
+    } 
+     
+    putloc++; 
+    q[putloc] = data; 
+  } 
+ 
+  // Get data from the queue. 
+  QType get() { 
+    if(getloc == putloc) { 
+      cout << " -- Queue is empty.\n"; 
+      return 0;  
+    } 
+   
+    getloc++; 
+    return q[getloc]; 
+  } 
+}; 
+ 
+// Demonstrate the generic Queue. 
+int main() 
+{ 
+  Queue<int> iQa(10), iQb(10);  // create two integer queues 
+ 
+  iQa.put(1); 
+  iQa.put(2); 
+  iQa.put(3); 
+ 
+  iQb.put(10); 
+  iQb.put(20); 
+  iQb.put(30); 
+ 
+  cout << "Contents of integer queue iQa: "; 
+  for(int i=0; i < 3; i++) 
+    cout << iQa.get() << " "; 
+  cout << endl; 
+ 
+  cout << "Contents of integer queue iQb: "; 
+  for(int i=0; i < 3; i++) 
+    cout << iQb.get() << " "; 
+  cout << endl; 
+ 
+  Queue<double> dQa(10), dQb(10);  // create two double queues 
+ 
+  dQa.put(1.01); 
+  dQa.put(2.02); 
+  dQa.put(3.03); 
+ 
+  dQb.put(10.01); 
+  dQb.put(20.02); 
+  dQb.put(30.03); 
+ 
+  cout << "Contents of double queue dQa: "; 
+  for(int i=0; i < 3; i++) 
+    cout << dQa.get() << " "; 
+  cout << endl; 
+ 
+  cout << "Contents of double queue dQb: "; 
+  for(int i=0; i < 3; i++) 
+    cout << dQb.get() << " "; 
+  cout << endl; 
+ 
+  return 0; 
+}
+
+listing 18
+// Demonstrate new and delete. 
+ 
+#include <iostream> 
+#include <new> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int *p; 
+ 
+  try { 
+    p = new int; // allocate space for an int 
+  } catch (bad_alloc xa) { 
+    cout << "Allocation Failure\n"; 
+    return 1; 
+  } 
+ 
+  *p = 100; 
+ 
+  cout << "At " << p << " "; 
+  cout << "is the value " << *p << "\n"; 
+ 
+  delete p; 
+ 
+  return 0; 
+}
+
+listing 19
+// Initialize memory. 
+ 
+#include <iostream> 
+#include <new> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int *p; 
+ 
+  try { 
+    p = new int (87); // initialize to 87 
+  } catch (bad_alloc xa) { 
+    cout << "Allocation Failure\n"; 
+    return 1; 
+  } 
+ 
+  cout << "At " << p << " "; 
+  cout << "is the value " << *p << "\n"; 
+ 
+  delete p; 
+ 
+  return 0; 
+}
+
+listing 20
+// Allocate an array. 
+ 
+#include <iostream> 
+#include <new> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int *p, i; 
+ 
+  try { 
+    p = new int [10]; // allocate 10 integer array 
+  } catch (bad_alloc xa) { 
+    cout << "Allocation Failure\n"; 
+    return 1; 
+  } 
+ 
+  for(i=0; i<10; i++ ) 
+    p[i] = i; 
+ 
+  for(i=0; i<10; i++) 
+    cout << p[i] << " "; 
+ 
+  delete [] p; // release the array 
+ 
+  return 0; 
+}
+
+listing 21
+// Allocate an object. 
+ 
+#include <iostream> 
+#include <new> 
+using namespace std; 
+ 
+class Rectangle { 
+  int width; 
+  int height; 
+public: 
+  Rectangle(int w, int h) { 
+    width = w; 
+    height = h; 
+    cout << "Constructing " << width << 
+          " by " << height << " rectangle.\n"; 
+  } 
+ 
+  ~Rectangle() {  
+     cout << "Destructing " << width << 
+          " by " << height << " rectangle.\n"; 
+  }  
+ 
+  int area() { 
+    return width * height; 
+  } 
+}; 
+ 
+int main() 
+{ 
+  Rectangle *p; 
+ 
+  try { 
+    p = new Rectangle(10, 8); 
+  } catch (bad_alloc xa) { 
+    cout << "Allocation Failure\n"; 
+    return 1; 
+  } 
+ 
+  cout << "Area is " << p->area(); 
+ 
+  cout << "\n"; 
+ 
+  delete p; 
+ 
+  return 0; 
+}
+
+listing 22
+// Allocate an array of objects. 
+ 
+#include <iostream> 
+#include <new> 
+using namespace std; 
+ 
+class Rectangle { 
+  int width; 
+  int height; 
+public: 
+  Rectangle() {  
+    width = height = 0; 
+    cout << "Constructing " << width << 
+          " by " << height << " rectangle.\n"; 
+  } 
+ 
+  Rectangle(int w, int h) { 
+    width = w; 
+    height = h; 
+    cout << "Constructing " << width << 
+          " by " << height << " rectangle.\n"; 
+  } 
+ 
+  ~Rectangle() {  
+     cout << "Destructing " << width << 
+          " by " << height << " rectangle.\n"; 
+  }  
+ 
+  void set(int w, int h) { 
+    width = w; 
+    height = h; 
+  } 
+ 
+  int area() { 
+    return width * height; 
+  } 
+}; 
+ 
+int main() 
+{ 
+  Rectangle *p; 
+ 
+  try { 
+    p = new Rectangle [3]; 
+  } catch (bad_alloc xa) { 
+    cout << "Allocation Failure\n"; 
+    return 1; 
+  } 
+ 
+  cout << "\n"; 
+ 
+  p[0].set(3, 4); 
+  p[1].set(10, 8); 
+  p[2].set(5, 6); 
+ 
+  for(int i=0; i < 3; i++) 
+    cout << "Area is " << p[i].area() << endl; 
+ 
+  cout << "\n"; 
+ 
+  delete [] p; 
+ 
+  return 0; 
+}
+
+listing 23
+// Demonstrate a namespace. 
+ 
+namespace CounterNameSpace { 
+  int upperbound; 
+  int lowerbound; 
+ 
+  class counter { 
+     int count; 
+   public: 
+     counter(int n) {  
+       if(n <= upperbound) count = n; 
+       else count = upperbound; 
+     } 
+ 
+     void reset(int n) { 
+       if(n <= upperbound) count = n; 
+     } 
+ 
+     int run() { 
+       if(count > lowerbound) return count--; 
+       else return lowerbound; 
+     } 
+  }; 
+}
+
+listing 24
+// Demonstrate a namespace. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+namespace CounterNameSpace { 
+  int upperbound; 
+  int lowerbound; 
+ 
+  class counter { 
+     int count; 
+   public: 
+     counter(int n) {  
+       if(n <= upperbound) count = n; 
+       else count = upperbound; 
+     } 
+ 
+     void reset(int n) { 
+       if(n <= upperbound) count = n; 
+     } 
+ 
+     int run() { 
+       if(count > lowerbound) return count--; 
+       else return lowerbound; 
+     } 
+  }; 
+} 
+ 
+int main() 
+{ 
+  CounterNameSpace::upperbound = 100; 
+  CounterNameSpace::lowerbound = 0; 
+ 
+  CounterNameSpace::counter ob1(10); 
+  int i; 
+ 
+  do { 
+    i = ob1.run(); 
+    cout << i << " "; 
+  } while(i > CounterNameSpace::lowerbound); 
+  cout << endl; 
+ 
+  CounterNameSpace::counter ob2(20); 
+ 
+  do { 
+    i = ob2.run(); 
+    cout << i << " "; 
+  } while(i > CounterNameSpace::lowerbound); 
+  cout << endl; 
+ 
+  ob2.reset(100); 
+  CounterNameSpace::lowerbound = 90; 
+  do { 
+    i = ob2.run(); 
+    cout << i << " "; 
+  } while(i > CounterNameSpace::lowerbound); 
+ 
+  return 0; 
+}
+
+listing 25
+namespace NS { 
+  int i; 
+} 
+ 
+// ... 
+ 
+namespace NS { 
+  int j; 
+}
+
+listing 26
+// Demonstrate using. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+namespace CounterNameSpace { 
+  int upperbound; 
+  int lowerbound; 
+ 
+  class counter { 
+     int count; 
+   public: 
+     counter(int n) {  
+       if(n <= upperbound) count = n; 
+       else count = upperbound; 
+     } 
+ 
+     void reset(int n) { 
+       if(n <= upperbound) count = n; 
+     } 
+ 
+     int run() { 
+       if(count > lowerbound) return count--; 
+       else return lowerbound; 
+     } 
+  }; 
+} 
+ 
+int main() 
+{ 
+  // use only upperbound from CounterNameSpace 
+  using CounterNameSpace::upperbound;  
+ 
+  // now, no qualification needed to set upperbound  
+  upperbound = 100; 
+ 
+  // qualification still needed for lowerbound, etc. 
+  CounterNameSpace::lowerbound = 0; 
+ 
+  CounterNameSpace::counter ob1(10); 
+  int i; 
+ 
+  do { 
+    i = ob1.run(); 
+    cout << i << " "; 
+  } while(i > CounterNameSpace::lowerbound); 
+  cout << endl; 
+ 
+  // Now, use entire CounterNameSpace 
+  using namespace CounterNameSpace; 
+ 
+  counter ob2(20); 
+ 
+  do { 
+    i = ob2.run(); 
+    cout << i << " "; 
+  } while(i > lowerbound); 
+  cout << endl; 
+ 
+  ob2.reset(100); 
+  lowerbound = 90; 
+  do { 
+    i = ob2.run(); 
+    cout << i << " "; 
+  } while(i > lowerbound); 
+ 
+  return 0; 
+}
+
+// listing 27
+// Use a static instance variable. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class ShareVar { 
+  static int num; 
+public: 
+  void setnum(int i) { num = i; }; 
+  void shownum() { cout << num << " "; } 
+}; 
+ 
+int ShareVar::num; // define num 
+ 
+int main() 
+{ 
+  ShareVar a, b; 
+ 
+  a.shownum(); // prints 0 
+  b.shownum(); // prints 0 
+ 
+  a.setnum(10); // set static num to 10 
+ 
+  a.shownum(); // prints 10 
+  b.shownum(); // also prints 10 
+ 
+  return 0; 
+}
+
+listing 28
+// Refer to static variable through its class name. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class Test { 
+public: 
+  static int num; 
+  void shownum() { cout << num << endl; } 
+}; 
+ 
+int Test::num; // define num 
+ 
+int main() 
+{ 
+  Test a, b; 
+ 
+  // Set num through its class name. 
+  Test::num = 100; 
+ 
+  a.shownum(); // prints 100 
+  b.shownum(); // prints 100 
+ 
+  // Set num through an object. 
+  a.num = 200; 
+ 
+  a.shownum(); // prints 200 
+  b.shownum(); // prints 200 
+ 
+  return 0; 
+} 
+
+
+listing 29
+// Demonstrate a static member functions. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class Test { 
+  static int count; 
+public: 
+ 
+  Test() { 
+    count++; 
+    cout << "Constructing object " << 
+             count << endl; 
+  } 
+ 
+  ~Test() { 
+     cout << "Destroying object " <<  
+             count << endl; 
+     count--; 
+  } 
+  
+  static int numObjects() { return count; } 
+}; 
+ 
+int Test::count; 
+ 
+int main() { 
+  Test a, b, c; 
+ 
+  cout << "There are now " << 
+          Test::numObjects() << 
+          " in existence.\n\n"; 
+ 
+  Test *p = new Test(); 
+ 
+  cout << "After allocating a Test object, " << 
+          "there are now " << 
+          Test::numObjects() << 
+          " in existence.\n\n"; 
+ 
+  delete p; 
+ 
+  cout << "After deleting an object, " << 
+          " there are now " << 
+          a.numObjects() << 
+          " in existence.\n\n"; 
+ 
+  return 0; 
+}
+
+listing 30
+// A simple example that uses typeid. 
+ 
+#include <iostream> 
+#include <typeinfo> 
+using namespace std; 
+ 
+class MyClass { 
+  // ... 
+}; 
+ 
+int main() 
+{ 
+  int i, j; 
+  float f; 
+  MyClass ob; 
+ 
+  cout << "The type of i is: " << typeid(i).name(); 
+  cout << endl; 
+  cout << "The type of f is: " << typeid(f).name(); 
+  cout << endl; 
+  cout << "The type of ob is: " << typeid(ob).name(); 
+  cout << "\n\n"; 
+ 
+  if(typeid(i) == typeid(j)) 
+    cout << "The types of i and j are the same\n"; 
+ 
+  if(typeid(i) != typeid(f)) 
+    cout << "The types of i and f are not the same\n"; 
+ 
+  return 0; 
+}
+
+listing 31
+// An example that uses typeid on a polymorphic class heirarchy. 
+ 
+#include <iostream> 
+#include <typeinfo> 
+using namespace std; 
+ 
+class Base { 
+  virtual void f() {}; // make Base polymorphic 
+  // ... 
+}; 
+ 
+class Derived1: public Base { 
+  // ... 
+}; 
+ 
+class Derived2: public Base { 
+  // ... 
+}; 
+ 
+int main() 
+{ 
+  Base *p, baseob; 
+  Derived1 ob1; 
+  Derived2 ob2; 
+ 
+  p = &baseob; 
+  cout << "p is pointing to an object of type "; 
+  cout << typeid(*p).name() << endl; 
+ 
+  p = &ob1; 
+  cout << "p is pointing to an object of type "; 
+  cout << typeid(*p).name() << endl; 
+ 
+  p = &ob2; 
+  cout << "p is pointing to an object of type "; 
+  cout << typeid(*p).name() << endl; 
+ 
+  return 0; 
+}
+

@@ -1,0 +1,1124 @@
+listing 1
+// A simple class hierarchy. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+public: 
+  double width; 
+  double height; 
+ 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+public: 
+  char style[20]; 
+   
+  double area() { 
+    return width * height / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+int main() { 
+  Triangle t1; 
+  Triangle t2; 
+ 
+  t1.width = 4.0; 
+  t1.height = 4.0; 
+  strcpy(t1.style, "isosceles"); 
+ 
+  t2.width = 8.0; 
+  t2.height = 12.0; 
+  strcpy(t2.style, "right"); 
+ 
+  cout << "Info for t1:\n"; 
+  t1.showStyle(); 
+  t1.showDim(); 
+  cout << "Area is " << t1.area() << "\n"; 
+ 
+  cout << "\n"; 
+  cout << "Info for t2:\n"; 
+  t2.showStyle(); 
+  t2.showDim(); 
+  cout << "Area is " << t2.area() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 2
+// A derived class of TwoDShape for rectangles. 
+class Rectangle : public TwoDShape { 
+public: 
+  bool isSquare() { 
+    if(width == height) return true; 
+    return false; 
+  } 
+   
+  double area() { 
+    return width * height; 
+  } 
+};
+
+listing 3
+// Access to private members is not granted to derived classes. 
+ 
+class TwoDShape { 
+  // these are now private 
+  double width;   
+  double height; 
+public: 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+public: 
+  char style[20]; 
+   
+  double area() { 
+    return width * height / 2; // Error! Can't access. 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+};
+
+listing 4
+// Access private data through accessor functions. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+  // these are private 
+  double width; 
+  double height; 
+public: 
+ 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+ 
+  // accessor functions 
+  double getWidth() { return width; } 
+  double getHeight() { return height; } 
+  void setWidth(double w) { width = w; } 
+  void setHeight(double h) { height = h; } 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+public: 
+  char style[20]; 
+   
+  double area() { 
+    return getWidth() * getHeight() / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+int main() { 
+  Triangle t1; 
+  Triangle t2; 
+ 
+  t1.setWidth(4.0); 
+  t1.setHeight(4.0); 
+  strcpy(t1.style, "isosceles"); 
+ 
+  t2.setWidth(8.0); 
+  t2.setHeight(12.0); 
+  strcpy(t2.style, "right"); 
+ 
+  cout << "Info for t1:\n"; 
+  t1.showStyle(); 
+  t1.showDim(); 
+  cout << "Area is " << t1.area() << "\n"; 
+ 
+  cout << "\n"; 
+  cout << "Info for t2:\n"; 
+  t2.showStyle(); 
+  t2.showDim(); 
+  cout << "Area is " << t2.area() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 5
+// Demonstrate public inheritance. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class B { 
+  int i, j; 
+public: 
+  void set(int a, int b) { i = a; j = b; } 
+  void show() { cout << i << " " << j << "\n"; } 
+}; 
+ 
+class D : public B { 
+  int k; 
+public: 
+  D(int x) { k = x; } 
+  void showk() { cout << k << "\n"; } 
+ 
+  // i = 10; // Error! i is private to B and access is not allowed. 
+}; 
+ 
+int main() 
+{ 
+  D ob(3); 
+ 
+  ob.set(1, 2); // access member of base class 
+  ob.show();    // access member of base class 
+ 
+  ob.showk();   // uses member of derived class 
+ 
+  return 0; 
+}
+
+listing 6
+// Use private inheritance. This program won't compile. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class B { 
+  int i, j; 
+public: 
+  void set(int a, int b) { i = a; j = b; } 
+  void show() { cout << i << " " << j << "\n"; } 
+}; 
+ 
+// Public elements of B become private in D. 
+class D : private B { 
+  int k; 
+public: 
+  D(int x) { k = x; } 
+  void showk() { cout << k << "\n"; } 
+}; 
+ 
+int main() 
+{ 
+  D ob(3); 
+ 
+  ob.set(1, 2); // Error, can't access set() 
+  ob.show();    // Error, can't access show() 
+ 
+  return 0; 
+}
+
+listing 7
+// Demonstrate protected members. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class B { 
+protected: 
+  int i, j; // private to B, but accessible to D 
+public: 
+  void set(int a, int b) { i = a; j = b; } 
+  void show() { cout << i << " " << j << "\n"; } 
+}; 
+ 
+class D : public B { 
+  int k; 
+public: 
+  // D may access B's i and j 
+  void setk() { k = i*j; } 
+ 
+  void showk() { cout << k << "\n"; } 
+}; 
+ 
+int main() 
+{ 
+  D ob; 
+ 
+  ob.set(2, 3); // OK, set() is public in B 
+  ob.show();    // OK, show is public B 
+ 
+  ob.setk(); 
+  ob.showk(); 
+ 
+  return 0; 
+}
+
+listing 8
+// Add a constructor to Triangle. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+  // these are private 
+  double width; 
+  double height; 
+public: 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+ 
+  // accessor functons 
+  double getWidth() { return width; } 
+  double getHeight() { return height; } 
+  void setWidth(double w) { width = w; } 
+  void setHeight(double h) { height = h; } 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+  char style[20]; // now private 
+public: 
+ 
+  // Constructor for Triangle. 
+  Triangle(char *str, double w, double h) { 
+   // Initialize the base class portion. 
+    setWidth(w); 
+    setHeight(h); 
+ 
+    // Initialize the derived class portion. 
+    strcpy(style, str); 
+  } 
+   
+  double area() { 
+    return getWidth() * getHeight() / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+int main() { 
+  Triangle t1("isosceles", 4.0, 4.0); 
+  Triangle t2("right", 8.0, 12.0); 
+ 
+  cout << "Info for t1:\n"; 
+  t1.showStyle(); 
+  t1.showDim(); 
+  cout << "Area is " << t1.area() << "\n"; 
+ 
+  cout << "\n"; 
+  cout << "Info for t2:\n"; 
+  t2.showStyle(); 
+  t2.showDim(); 
+  cout << "Area is " << t2.area() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 9
+// Add a constructor to TwoDShape. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+  // these are private 
+  double width; 
+  double height; 
+public: 
+ 
+  // Constructor for TwoDShape. 
+  TwoDShape(double w, double h) { 
+    width = w; 
+    height = h; 
+  } 
+ 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+ 
+  // accessor functions 
+  double getWidth() { return width; } 
+  double getHeight() { return height; } 
+  void setWidth(double w) { width = w; } 
+  void setHeight(double h) { height = h; } 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+  char style[20]; // now private 
+public: 
+ 
+  // Constructor for Triangle. 
+  Triangle(char *str, double w, 
+           double h) : TwoDShape(w, h) { 
+    strcpy(style, str); 
+  } 
+   
+  double area() { 
+    return getWidth() * getHeight() / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+int main() { 
+  Triangle t1("isosceles", 4.0, 4.0); 
+  Triangle t2("right", 8.0, 12.0); 
+ 
+  cout << "Info for t1:\n"; 
+  t1.showStyle(); 
+  t1.showDim(); 
+  cout << "Area is " << t1.area() << "\n"; 
+ 
+  cout << "\n"; 
+  cout << "Info for t2:\n"; 
+  t2.showStyle(); 
+  t2.showDim(); 
+  cout << "Area is " << t2.area() << "\n"; 
+ 
+  return 0; 
+}
+
+
+listing 10
+// Add a constructor to TwoDShape. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+  // these are private 
+  double width; 
+  double height; 
+public: 
+ 
+  // Default constructor. 
+  TwoDShape() { 
+    width = height = 0.0; 
+  } 
+ 
+  // Constructor for TwoDShape. 
+  TwoDShape(double w, double h) { 
+    width = w; 
+    height = h; 
+  } 
+ 
+  // Construct object with equal width and height. 
+  TwoDShape(double x) { 
+    width = height = x; 
+  } 
+ 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+ 
+  // accessor functions 
+  double getWidth() { return width; } 
+  double getHeight() { return height; } 
+  void setWidth(double w) { width = w; } 
+  void setHeight(double h) { height = h; } 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+  char style[20]; // now private 
+public: 
+ 
+  /* A default constructor. This automatically invokes 
+     the default constructor of TwoDShape. */ 
+  Triangle() { 
+    strcpy(style, "unknown"); 
+  } 
+ 
+  // Constructor with three parameters. 
+  Triangle(char *str, double w, 
+           double h) : TwoDShape(w, h) { 
+    strcpy(style, str); 
+  } 
+   
+  // Construct an isosceles triangle. 
+  Triangle(double x) : TwoDShape(x) { 
+    strcpy(style, "isosceles");  
+  } 
+ 
+  double area() { 
+    return getWidth() * getHeight() / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+int main() { 
+  Triangle t1; 
+  Triangle t2("right", 8.0, 12.0); 
+  Triangle t3(4.0); 
+ 
+  t1 = t2; 
+ 
+  cout << "Info for t1: \n"; 
+  t1.showStyle(); 
+  t1.showDim(); 
+  cout << "Area is " << t1.area() << "\n"; 
+ 
+  cout << "\n"; 
+ 
+  cout << "Info for t2: \n"; 
+  t2.showStyle(); 
+  t2.showDim(); 
+  cout << "Area is " << t2.area() << "\n"; 
+ 
+  cout << "\n"; 
+ 
+  cout << "Info for t3: \n"; 
+  t3.showStyle(); 
+  t3.showDim(); 
+  cout << "Area is " << t3.area() << "\n"; 
+ 
+  cout << "\n"; 
+ 
+  return 0; 
+}
+
+listing 11
+// Create a subclass of Vehicle called Truck. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// Declare the Vehicle class. 
+class Vehicle {  
+  // These are private. 
+  int passengers; // number of passengers  
+  int fuelcap;    // fuel capacity in gallons 
+  int mpg;        // fuel consumption in miles per gallon 
+public: 
+  // This is a constructor for Vehicle. 
+  Vehicle(int p, int f, int m) { 
+    passengers = p; 
+    fuelcap = f; 
+    mpg = m; 
+  } 
+ 
+  // Compute and return the range. 
+  int range() { return mpg * fuelcap; } 
+ 
+  // Accessor functions. 
+  int get_passengers() { return passengers; } 
+  int get_fuelcap() { return fuelcap; } 
+  int get_mpg() { return mpg; } 
+}; 
+ 
+// Use Vehicle to create a Truck specialization.    
+class Truck : public Vehicle {  
+  int cargocap; // cargo capacity in pounds  
+public: 
+ 
+  // This is a constructor for Truck.  
+  Truck(int p, int f, 
+               int m, int c) : Vehicle(p, f, m)  
+  {  
+    cargocap = c;  
+  }  
+ 
+  // Accessor function for cargocap. 
+  int get_cargocap() { return cargocap; } 
+};  
+    
+int main() {    
+  
+  // construct some trucks 
+  Truck semi(2, 200, 7, 44000);    
+  Truck pickup(3, 28, 15, 2000);    
+  int dist = 252; 
+ 
+  cout << "Semi can carry " << semi.get_cargocap() <<  
+                     " pounds.\n"; 
+  cout << "It has a range of " << 
+           semi.range() << " miles.\n"; 
+  cout << "To go " << dist << " miles semi needs " << 
+          dist / semi.get_mpg() << 
+          " gallons of fuel.\n\n";   
+       
+  cout << "Pickup can carry " << pickup.get_cargocap() << 
+                     " pounds.\n"; 
+  cout << "It has a range of " << 
+           pickup.range() << " miles.\n"; 
+  cout << "To go " << dist << " miles pickup needs " << 
+           dist / pickup.get_mpg() << 
+           " gallons of fuel.\n";  
+ 
+  return 0; 
+}
+
+listing 12
+// Create an off-road vehicle class 
+class OffRoad : public Vehicle { 
+  int groundClearance; // ground clearance in inches 
+public: 
+  // ... 
+};
+
+listing 13
+// A multilevel hierarchy. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+  // these are private 
+  double width; 
+  double height; 
+public: 
+ 
+  // Default constructor. 
+  TwoDShape() { 
+    width = height = 0.0; 
+  } 
+ 
+  // Constructor for TwoDShape. 
+  TwoDShape(double w, double h) { 
+    width = w; 
+    height = h; 
+  } 
+ 
+  // Construct object with equal width and height. 
+  TwoDShape(double x) { 
+    width = height = x; 
+  } 
+ 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+ 
+  // accessor functions 
+  double getWidth() { return width; } 
+  double getHeight() { return height; } 
+  void setWidth(double w) { width = w; } 
+  void setHeight(double h) { height = h; } 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+  char style[20]; // now private 
+public: 
+ 
+  /* A default constructor. This automatically invokes 
+     the default constructor of TwoDShape. */ 
+  Triangle() { 
+    strcpy(style, "unknown"); 
+  } 
+ 
+  // Constructor with three parameters. 
+  Triangle(char *str, double w, 
+           double h) : TwoDShape(w, h) { 
+    strcpy(style, str); 
+  } 
+   
+  // Construct an isosceles triangle. 
+  Triangle(double x) : TwoDShape(x) { 
+    strcpy(style, "isosceles");  
+  } 
+ 
+  double area() { 
+    return getWidth() * getHeight() / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+// Extend Triangle. 
+class ColorTriangle : public Triangle { 
+  char color[20]; 
+public: 
+  ColorTriangle(char *clr, char *style, double w, 
+                double h) : Triangle(style, w, h) { 
+    strcpy(color, clr); 
+  } 
+ 
+  // Display the color. 
+  void showColor() { 
+    cout << "Color is " << color << "\n"; 
+  } 
+}; 
+ 
+int main() { 
+  ColorTriangle t1("Blue", "right", 8.0, 12.0); 
+  ColorTriangle t2("Red", "isosceles", 2.0, 2.0); 
+ 
+  cout << "Info for t1:\n"; 
+  t1.showStyle(); 
+  t1.showDim(); 
+  t1.showColor(); 
+  cout << "Area is " << t1.area() << "\n"; 
+ 
+  cout << "\n"; 
+ 
+  cout << "Info for t2:\n"; 
+  t2.showStyle(); 
+  t2.showDim(); 
+  t2.showColor(); 
+  cout << "Area is " << t2.area() << "\n"; 
+ 
+  return 0; 
+}
+
+listing 14
+// An example of multiple base classes. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class B1 { 
+protected: 
+  int x; 
+public: 
+  void showx() { cout << x << "\n"; } 
+}; 
+ 
+class B2 { 
+protected: 
+  int y; 
+public: 
+  void showy() { cout << y << "\n"; } 
+}; 
+ 
+// Inherit multiple base classes. 
+class D: public B1, public B2 { 
+public: 
+  /* x and y are accessible because they are 
+     protected in B1 and B2, not private. */ 
+  void set(int i, int j) { x = i; y = j; } 
+}; 
+ 
+int main() 
+{ 
+  D ob; 
+ 
+  ob.set(10, 20); // provided by D 
+  ob.showx();     // from B1 
+  ob.showy();     // from B2 
+ 
+  return 0; 
+}
+
+listing 15
+#include <iostream> 
+using namespace std; 
+ 
+class B { 
+public: 
+  B() { cout << "Constructing base portion\n"; } 
+  ~B() { cout << "Destructing base portion\n"; } 
+}; 
+ 
+class D: public B { 
+public: 
+  D() { cout << "Constructing derived portion\n"; } 
+  ~D() { cout << "Destructing derived portion\n"; } 
+}; 
+ 
+int main() 
+{ 
+  D ob; 
+ 
+  // do nothing but construct and destruct ob 
+ 
+  return 0; 
+}
+
+listing 16
+// A short example that uses a virtual function. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+class B { 
+public: 
+  virtual void who() { // specify a virtual function 
+    cout << "Base\n"; 
+  } 
+}; 
+ 
+class D1 : public B { 
+public: 
+  void who() { // redefine who() for D1  
+    cout << "First derivation\n"; 
+  } 
+}; 
+ 
+class D2 : public B { 
+public: 
+  void who() { // redefine who() for D2 
+    cout << "Second derivation\n"; 
+  } 
+}; 
+ 
+int main() 
+{ 
+  B base_obj; 
+  B *p; 
+  D1 D1_obj; 
+  D2 D2_obj; 
+ 
+  p = &base_obj; 
+  p->who();  // access B's who 
+ 
+  p = &D1_obj; 
+  p->who(); // access D1's who 
+ 
+  p = &D2_obj; 
+  p->who();  // access D2's who 
+   
+  return 0; 
+}
+
+listing 17
+// Derive from D1, not B. 
+class D2 : public D1 { 
+public: 
+  void who() { // define who() relative to second_d 
+    cout << "Second derivation\n"; 
+  } 
+};
+
+listing 18
+#include <iostream> 
+using namespace std; 
+ 
+class B { 
+public: 
+  virtual void who() { 
+    cout << "Base\n"; 
+  } 
+}; 
+ 
+class D1 : public B { 
+public: 
+  void who() { 
+    cout << "First derivation\n"; 
+  } 
+}; 
+ 
+class D2 : public B { 
+// who() not defined 
+}; 
+ 
+int main() 
+{ 
+  B base_obj; 
+  B *p; 
+  D1 D1_obj; 
+  D2 D2_obj; 
+ 
+  p = &base_obj; 
+  p->who();  // access B's who() 
+ 
+  p = &D1_obj; 
+  p->who(); // access D1's who() 
+ 
+  p = &D2_obj; 
+  p->who(); /* access B's who() because 
+               D2 does not redefine it */ 
+ 
+  return 0; 
+}
+
+listing 19
+// Use virtual functions and polymorphism. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+  // these are private 
+  double width; 
+  double height; 
+ 
+  // add a name field 
+  char name[20]; 
+public: 
+ 
+  // Default constructor. 
+  TwoDShape() { 
+    width = height = 0.0; 
+    strcpy(name, "unknown"); 
+  } 
+ 
+  // Constructor for TwoDShape. 
+  TwoDShape(double w, double h, char *n) { 
+    width = w; 
+    height = h; 
+    strcpy(name, n); 
+  } 
+ 
+  // Construct object with equal width and height. 
+  TwoDShape(double x, char *n) { 
+    width = height = x; 
+    strcpy(name, n); 
+  } 
+ 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+ 
+  // accessor functions 
+  double getWidth() { return width; } 
+  double getHeight() { return height; } 
+  void setWidth(double w) { width = w; } 
+  void setHeight(double h) { height = h; } 
+  char *getName() { return name; } 
+ 
+  // Add area() to TwoDShape and make it virtual. 
+  virtual double area() {   
+    cout << "Error: area() must be overridden.\n";  
+    return 0.0;  
+  }   
+ 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+  char style[20]; // now private 
+public: 
+ 
+  /* A default constructor. This automatically invokes 
+     the default constructor of TwoDShape. */ 
+  Triangle() { 
+    strcpy(style, "unknown"); 
+  } 
+ 
+  // Constructor with three parameters. 
+  Triangle(char *str, double w, 
+           double h) : TwoDShape(w, h, "triangle") { 
+    strcpy(style, str); 
+  } 
+   
+  // Construct an isosceles triangle. 
+  Triangle(double x) : TwoDShape(x, "triangle") { 
+    strcpy(style, "isosceles");  
+  } 
+ 
+  // This now overrides area() declared in TwoDShape. 
+  double area() { 
+    return getWidth() * getHeight() / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+// A derived class of TwoDShape for rectangles. 
+class Rectangle : public TwoDShape { 
+public: 
+ 
+  // Construct a rectangle.  
+  Rectangle(double w, double h) :  
+    TwoDShape(w, h, "rectangle") { }  
+  
+  // Construct a square.  
+  Rectangle(double x) :  
+    TwoDShape(x, "rectangle") { }  
+ 
+  bool isSquare() { 
+    if(getWidth() == getHeight()) return true; 
+    return false; 
+  } 
+ 
+  // This is another override of area().   
+  double area() { 
+    return getWidth() * getHeight(); 
+  } 
+}; 
+ 
+int main() { 
+  // declare an array of pointers to TwoDShape objects. 
+  TwoDShape *shapes[5]; 
+  
+  shapes[0] = &Triangle("right", 8.0, 12.0);  
+  shapes[1] = &Rectangle(10);  
+  shapes[2] = &Rectangle(10, 4);  
+  shapes[3] = &Triangle(7.0);  
+  shapes[4] = &TwoDShape(10, 20, "generic"); 
+  
+  for(int i=0; i < 5; i++) {  
+    cout << "object is " << 
+            shapes[i]->getName() << "\n";  
+ 
+    cout << "Area is " << 
+            shapes[i]->area() << "\n";  
+  
+    cout << "\n";    
+  }  
+ 
+  return 0; 
+}
+
+
+listing 20
+// Use a pure virtual function. 
+ 
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+ 
+// A class for two-dimensional objects. 
+class TwoDShape { 
+  // these are private 
+  double width; 
+  double height; 
+ 
+  // add a name field 
+  char name[20]; 
+public: 
+ 
+  // Default constructor. 
+  TwoDShape() { 
+    width = height = 0.0; 
+    strcpy(name, "unknown"); 
+  } 
+ 
+  // Constructor for TwoDShape. 
+  TwoDShape(double w, double h, char *n) { 
+    width = w; 
+    height = h; 
+    strcpy(name, n); 
+  } 
+ 
+  // Construct object with equal width and height. 
+  TwoDShape(double x, char *n) { 
+    width = height = x; 
+    strcpy(name, n); 
+  } 
+ 
+  void showDim() { 
+    cout << "Width and height are " << 
+             width << " and " << height << "\n"; 
+  } 
+ 
+  // accessor functions 
+  double getWidth() { return width; } 
+  double getHeight() { return height; } 
+  void setWidth(double w) { width = w; } 
+  void setHeight(double h) { height = h; } 
+  char *getName() { return name; } 
+ 
+  // area()is now a pure virtual function 
+  virtual double area() = 0; 
+ 
+}; 
+ 
+// Triangle is derived from TwoDShape. 
+class Triangle : public TwoDShape { 
+  char style[20]; // now private 
+public: 
+ 
+  /* A default constructor. This automatically invokes 
+     the default constructor of TwoDShape. */ 
+  Triangle() { 
+    strcpy(style, "unknown"); 
+  } 
+ 
+  // Constructor with three parameters. 
+  Triangle(char *str, double w, 
+           double h) : TwoDShape(w, h, "triangle") { 
+    strcpy(style, str); 
+  } 
+   
+  // Construct an isosceles triangle. 
+  Triangle(double x) : TwoDShape(x, "triangle") { 
+    strcpy(style, "isosceles");  
+  } 
+ 
+  // This now overrides area() declared in TwoDShape. 
+  double area() { 
+    return getWidth() * getHeight() / 2; 
+  } 
+ 
+  void showStyle() { 
+    cout << "Triangle is " << style << "\n"; 
+  } 
+}; 
+ 
+// A derived class of TwoDShape for rectangles. 
+class Rectangle : public TwoDShape { 
+public: 
+ 
+  // Construct a rectangle.  
+  Rectangle(double w, double h) :  
+    TwoDShape(w, h, "rectangle") { }  
+  
+  // Construct a square.  
+  Rectangle(double x) :  
+    TwoDShape(x, "rectangle") { }  
+ 
+  bool isSquare() { 
+    if(getWidth() == getHeight()) return true; 
+    return false; 
+  } 
+ 
+  // This is another override of area().   
+  double area() { 
+    return getWidth() * getHeight(); 
+  } 
+}; 
+ 
+int main() { 
+  // declare an array of pointers to TwoDShape objects. 
+  TwoDShape *shapes[4]; 
+  
+  shapes[0] = &Triangle("right", 8.0, 12.0);  
+  shapes[1] = &Rectangle(10);  
+  shapes[2] = &Rectangle(10, 4);  
+  shapes[3] = &Triangle(7.0);  
+  
+  for(int i=0; i < 4; i++) {  
+    cout << "object is " << 
+            shapes[i]->getName() << "\n";  
+ 
+    cout << "Area is " << 
+            shapes[i]->area() << "\n";  
+  
+    cout << "\n";    
+  }  
+ 
+  return 0; 
+}
+

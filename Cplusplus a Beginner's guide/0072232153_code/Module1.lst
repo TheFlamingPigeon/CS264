@@ -1,0 +1,310 @@
+listing 1
+/*  
+   This is a simple C++ program. 
+ 
+   Call this file Sample.cpp. 
+*/ 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+// A C++ program begins at main(). 
+int main() 
+{ 
+  cout << "C++ is power programming."; 
+ 
+  return 0; 
+}
+
+listing 2
+// Using a variable. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int length; // this declares a variable 
+ 
+  length = 7; // this assigns 7 to length 
+ 
+  cout << "The length is "; 
+  cout << length; // This displays 7 
+ 
+  return 0; 
+}
+
+listing 3
+// Using an operator.  
+  
+#include <iostream>  
+using namespace std;  
+  
+int main()  
+{  
+  int length; // this declares a variable  
+  int width;  // this declares another variable  
+  int area;   // this does, too 
+ 
+  length = 7; // this assigns 7 to length  
+  width = 5;  // this assigns 5 to width  
+  
+  area = length * width; // compute area 
+ 
+  cout << "The area is ";  
+  cout << area; // This displays 35 
+  
+  return 0;  
+}
+
+listing 4
+// A simplified version of the area program. 
+  
+#include <iostream>  
+using namespace std;  
+  
+int main()  
+{  
+  int length; // this declares a variable  
+  int width;  // this declares another variable  
+  
+  length = 7; // this assigns 7 to length  
+  width = 5;  // this assigns 5 to width  
+  
+  cout << "The area is ";  
+  cout << length * width; // This displays 35 
+  
+  return 0;  
+}
+
+listing 5
+/* 
+   An interactive program that computes 
+   the area of a rectangle. 
+*/ 
+  
+#include <iostream>  
+using namespace std;  
+  
+int main()  
+{  
+  int length; // this declares a variable  
+  int width;  // this declares another variable  
+  
+  cout << "Enter the length: "; 
+  cin >> length; // input the length 
+ 
+  cout << "Enter the width: "; 
+  cin >> width;  // input the width  
+  
+  cout << "The area is ";  
+  cout << length * width; // display the area 
+  
+  return 0;  
+}
+
+listing 6
+/*
+   This program demonstrates the \n code, which 
+   generates a new line. 
+*/ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  cout << "one\n"; 
+  cout << "two\n"; 
+  cout << "three"; 
+  cout << "four"; 
+ 
+  return 0; 
+}
+
+listing 7
+/*  
+   This program illustrates the differences 
+   between int and double. 
+*/  
+ 
+#include <iostream>  
+using namespace std; 
+ 
+int main() {  
+  int ivar;    // this declares an int variable 
+  double dvar; // this declares a floating-point variable 
+ 
+  ivar = 100; // assign ivar the value 100 
+    
+  dvar = 100.0; // assign dvar the value 100.0 
+ 
+  cout << "Original value of ivar: " << ivar << "\n"; 
+  cout << "Original value of dvar: " << dvar << "\n"; 
+ 
+  cout << "\n"; // print a blank line 
+ 
+  // now, divide both by 3 
+  ivar = ivar / 3;  
+  dvar = dvar / 3.0; 
+ 
+  cout << "ivar after division: " << ivar << "\n"; 
+  cout << "dvar after division: " << dvar << "\n"; 
+ 
+  return 0; 
+}
+
+listing 8
+/*   
+   Project 1-1  
+  
+   This program converts feet to meters.  
+  
+   Call this program FtoM.cpp.  
+*/  
+  
+#include <iostream>  
+using namespace std;  
+  
+int main() {   
+  double f; // holds the length in feet  
+  double m; // holds the conversion to meters  
+  
+  cout << "Enter the length in feet: "; 
+  cin >> f; // read the number of feet   
+  
+  m = f / 3.28; // convert to meters 
+  cout << f << " feet is " << m << " meters.";  
+ 
+  return 0; 
+}
+
+listing 9
+// Demonstrate the if.  
+ 
+#include <iostream> 
+using namespace std; 
+  
+int main() {  
+  int a, b, c;  
+  
+  a = 2;  
+  b = 3;  
+  
+  if(a < b) cout << "a is less than b\n"; 
+ 
+  // this won't display anything  
+  if(a == b) cout << "you won't see this\n";  
+ 
+  cout << "\n"; 
+ 
+  c = a - b; // c contains -1 
+ 
+  cout << "c contains -1\n"; 
+  if(c >= 0) cout << "c is non-negative\n"; 
+  if(c < 0) cout << "c is negative\n"; 
+ 
+  cout << "\n"; 
+ 
+  c = b - a; // c now contains 1 
+  cout << "c contains 1\n"; 
+  if(c >= 0) cout << "c is non-negative\n"; 
+  if(c < 0) cout << "c is negative\n"; 
+ 
+  return 0; 
+} 
+
+
+listing 10
+// A program that illustrates the for loop. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() 
+{ 
+  int count; 
+ 
+  for(count=1; count <= 100; count=count+1)  
+    cout << count << " "; 
+ 
+  return 0; 
+}
+
+listing 11
+// Demonstrate a block of code. 
+ 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+  double result, n, d; 
+ 
+  cout << "Enter value: "; 
+  cin >> n; 
+ 
+  cout << "Enter divisor: "; 
+  cin >> d; 
+ 
+  // the target of this if is a block 
+  if(d != 0) { 
+    cout << "d does not equal zero so division is OK" << "\n"; 
+    result = n / d; 
+    cout << n << " / " << d << " is " << result; 
+  } 
+ 
+  return 0; 
+}
+
+listing 12
+/*   
+   Project 1-2  
+  
+   This program displays a conversion table of feet to meters.  
+  
+   Call this program FtoMTable.cpp.  
+*/  
+  
+#include <iostream>  
+using namespace std;  
+  
+int main() {   
+  double f; // holds the length in feet  
+  double m; // holds the conversion to meters  
+  int counter; 
+ 
+  counter = 0; 
+ 
+  for(f = 1.0; f <= 100.0; f++) { 
+    m = f / 3.28; // convert to meters 
+    cout << f << " feet is " << m << " meters.\n";  
+     
+    counter++;  
+ 
+    // every 10th line, print a blank line 
+    if(counter == 10) { 
+      cout << "\n"; // output a blank line 
+      counter = 0; // reset the line counter 
+    } 
+  } 
+ 
+  return 0; 
+}
+
+listing 13
+// Use the abs() function. 
+ 
+#include <iostream> 
+#include <cstdlib>  
+using namespace std; 
+ 
+int main() 
+{ 
+  int result; 
+ 
+  result = abs(-10); 
+ 
+  cout << result; 
+ 
+  return 0; 
+}
+
